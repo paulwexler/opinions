@@ -33,7 +33,7 @@ and has a solid notehead.
 Informally,
 the half note receives more horizontal space
 between it and the next note
-than the quarter note does.
+than does the quarter note.
 The result is that you do not have to read every note;
 you can "see it at a glance" [^2].
 
