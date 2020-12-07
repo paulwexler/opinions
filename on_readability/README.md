@@ -1,4 +1,13 @@
-# On Readability
+# On Readability or Why I'd Like PEP-8 to Change
+
+For years I maintained that continuation lines
+should begin with binary operators
+despite PEP-8's recommendation to end with them.
+PEP-8 finally came around and now follows Knuth's advice.
+Thus emboldened I recommend that
+PEP-8 adopt the principles outlined below.
+In PEP-8 many of the examples labeled "# Correct:"
+are not as readable as they could be.
 
 Most programmers would agree that "Readability counts" [^1].
 What makes code "readable"?
@@ -13,9 +22,9 @@ and reading music to realize the composer's intent.
 While music notation has had centuries to develop,
 coding has had only decades.
 
-A good manuscript maintains a consistant redundency
-beteen the formal rules
-and the informal style.
+A good manuscript maintains a ***consistant redundency***
+between the ***formal rules***
+and the ***informal style***.
 For example,
 formally, the half note gets two beats
 and has a hollow notehead,
@@ -35,26 +44,32 @@ you can just see it.
 Use vertical space strategically.
 It is an extension of what makes indentation so powerful.
 
-1. Double indent continuation lines
+1. Always double indent continuation lines
    so they do not obscure the shape of the block.
 2. When there are several arguments to a function call,
    or when they do not fit on a (79 character) line,
    put each argument on its own (doubly-indented) line.
    It is far easier to scan the vertical space a function uses
    than to count its commas.
-	```
-   	>>> scanable_code = code(
-   	... 		which_uses,
-	... 		vertical_space,
-	... 		strategically_so,
-	... 		readable=True)
+    ```
+    >>> scanable_code = code(
+    ...         which_uses,
+    ...         vertical_space,
+    ...         strategically_so,
+    ...         readable=True)
 
-	>>> message_string = (
-	... 		"This string is broken up into"
-	... 		" smaller pieces so scrolling is"
-	... 		" not necessary to see all of it.
-	... 		" Please note the leading spaces.")
-	```
+    >>> message_string = (
+    ...         "This string is broken up into"
+    ...         " smaller pieces so scrolling is"
+    ...         " not necessary to see all of it.
+    ...         " Please note the leading spaces.")
+
+    >>> special_account_name = (
+	...         special_account_payload
+    ...                 ['data']
+    ...                 ['Account']
+    ...                 ['Name'])
+    ```
 3. Limit methods to a single screen.
    Break it up into smaller methods if it does not fit.
    "Bugs" creep in between the screens,
@@ -62,6 +77,7 @@ It is an extension of what makes indentation so powerful.
    Here is a surprisingly accurate heuristic:
    ```
    number_of_mistakes = 2 ** (number_of_screens - 2)
+   ```
 
 [^1]: [The Zen of Python.] (https://www.python.org/dev/peps/pep-0020/)
 
