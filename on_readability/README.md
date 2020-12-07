@@ -1,12 +1,12 @@
-# On Readability or Why I'd Like PEP-8 to Change
+# On Readability or Why I'd Like [PEP-8] to Change
 
 For years I maintained that continuation lines
 should begin with binary operators
-despite PEP-8's recommendation to end with them.
-PEP-8 finally came around and now follows Knuth's advice.
+despite [PEP-8]'s recommendation to end with them.
+[PEP-8] finally came around and now follows Knuth's advice.
 Thus emboldened I recommend that
 [PEP-8] adopt the principles outlined below.
-In PEP-8 many of the examples labeled "# Correct:"
+In [PEP-8] many of the examples labeled "# Correct:"
 are not as readable as they could be.
 
 Most programmers would agree that "Readability counts" [^1].
