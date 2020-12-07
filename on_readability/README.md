@@ -5,7 +5,7 @@ should begin with binary operators
 despite PEP-8's recommendation to end with them.
 PEP-8 finally came around and now follows Knuth's advice.
 Thus emboldened I recommend that
-PEP-8 adopt the principles outlined below.
+[PEP-8] adopt the principles outlined below.
 In PEP-8 many of the examples labeled "# Correct:"
 are not as readable as they could be.
 
@@ -78,6 +78,8 @@ It is an extension of what makes indentation so powerful.
    ```
    number_of_mistakes = 2 ** (number_of_screens - 2)
    ```
+
+[PEP-8]: https://www.python.org/dev/peps/pep-0008/#code-lay-out
 
 [^1]: [The Zen of Python.] (https://www.python.org/dev/peps/pep-0020/)
 
