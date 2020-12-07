@@ -43,6 +43,8 @@ you can just see it.
 
 Use vertical space strategically.
 It is an extension of what makes indentation so powerful.
+It is usually easier to scan the correctness of an expression
+when it only has one new idea per line.
 
 1. Always double indent continuation lines
    so they do not obscure the shape of the block.
