@@ -49,7 +49,6 @@ when it only has one new idea per line.
 1. Always double indent continuation lines
    so they do not obscure the shape of the block.
 2. When there are several arguments to a function call,
-   or when they do not fit on a (79 character) line,
    put each argument on its own (doubly-indented) line.
    It is far easier to scan the vertical space a function uses
    than to count its commas.
