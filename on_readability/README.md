@@ -62,7 +62,7 @@ when it only has one new idea per line.
     >>> message_string = (
     ...         "This string is broken up into"
     ...         " smaller pieces so scrolling is"
-    ...         " not necessary to see all of it.
+    ...         " not necessary to see all of it."
     ...         " Please note the leading spaces.")
 
     >>> special_account_name = (
