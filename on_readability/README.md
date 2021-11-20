@@ -42,7 +42,7 @@ It is an extension of what makes indentation so powerful.
    put each argument on its own (doubly-indented) line.
    It is far easier to scan the vertical space a function uses
    than to count its commas.
-	```
+	```python
    	>>> scanable_code = code(
    	... 		which_uses,
 	... 		vertical_space,
@@ -55,12 +55,19 @@ It is an extension of what makes indentation so powerful.
 	... 		" not necessary to see all of it.
 	... 		" Please note the leading spaces.")
 	```
-3. Limit methods to a single screen.
+3. When an expression is complicated,
+   break it up into one idea per line.
+   ```python
+   >>> value = do_something_to(
+   ...          this_value if condition
+   ...          else that_value)
+   ```
+4. Limit methods to a single screen.
    Break it up into smaller methods if it does not fit.
    "Bugs" creep in between the screens,
    so it is best when you can see the entire method at once.
    Here is a surprisingly accurate heuristic:
-   ```
+   ```python
    number_of_mistakes = 2 ** (number_of_screens - 2)
 
 [^1]: [The Zen of Python.] (https://www.python.org/dev/peps/pep-0020/)
