@@ -42,19 +42,19 @@ It is an extension of what makes indentation so powerful.
    put each argument on its own (doubly-indented) line.
    It is far easier to scan the vertical space a function uses
    than to count its commas.
-	```python
-   	>>> scanable_code = code(
-   	... 		which_uses,
-	... 		vertical_space,
-	... 		strategically_so,
-	... 		readable=True)
+   ```python
+   >>> scanable_code = code(
+   ... 		which_uses,
+   ... 		vertical_space,
+   ... 		strategically_so,
+   ... 		readable=True)
 
-	>>> message_string = (
-	... 		"This string is broken up into"
-	... 		" smaller pieces so scrolling is"
-	... 		" not necessary to see all of it.
-	... 		" Please note the leading spaces.")
-	```
+   >>> message_string = (
+   ... 		"This string is broken up into"
+   ... 		" smaller pieces so scrolling is"
+   ... 		" not necessary to see all of it.
+   ... 		" Please note the leading spaces.")
+   ```
 3. When an expression is complicated,
    break it up into one idea per line.
    ```python
