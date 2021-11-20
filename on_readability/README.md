@@ -44,23 +44,23 @@ It is an extension of what makes indentation so powerful.
    than to count its commas.
    ```python
    >>> scanable_code = code(
-   ... 		which_uses,
-   ... 		vertical_space,
-   ... 		strategically_so,
-   ... 		readable=True)
+   ...         which_uses,
+   ...         vertical_space,
+   ...         strategically_so,
+   ...         readable=True)
 
    >>> message_string = (
-   ... 		"This string is broken up into"
-   ... 		" smaller pieces so scrolling is"
-   ... 		" not necessary to see all of it.
-   ... 		" Please note the leading spaces.")
+   ...         "This string is broken up into"
+   ...         " smaller pieces so scrolling is"
+   ...         " not necessary to see all of it.
+   ...         " Please note the leading spaces.")
    ```
 3. When an expression is complicated,
    break it up into one idea per line.
    ```python
    >>> value = do_something_to(
-   ...          this_value if condition
-   ...          else that_value)
+   ...         this_value if condition
+   ...         else that_value)
    ```
 4. Limit methods to a single screen.
    Break it up into smaller methods if it does not fit.
