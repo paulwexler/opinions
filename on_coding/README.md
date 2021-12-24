@@ -41,9 +41,9 @@ Find the connection between the input and the output.
   Each class will define an object
   and implement the operations on it.
   It will provide a layer of abstaction
-  so users can reference the operations by name
+  so operations can be referenced by name
   (perhaps qualified with arguments),
-  and need not know any further details.
+  and knowledge of the details is not required.
 
 4. State the solution.\
   Derive the desired result from operations on the objects.
