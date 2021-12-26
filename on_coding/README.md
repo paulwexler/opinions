@@ -40,7 +40,7 @@ Find the connection between the input and the output.
   Appropriate classes will emerge from this analysis.
   Each class will define an object
   and implement the operations on it.
-  It will provide a layer of abstaction
+  It will provide a layer of abstraction
   so operations can be referenced by name
   (perhaps qualified with arguments),
   and knowledge of the details is not required.
@@ -123,7 +123,7 @@ The redaction is straight forward.
   The passwords are encoded in a JSON dict
   as the value of the "password" key (using a case-insensitive match).
 
-This example is simple beause there is no error handling.
+This example is simple because there is no error handling.
 The opening and management of the files will be handled by the pipeline
 of which this program will be a part.
 
@@ -139,7 +139,7 @@ and then calls it.
 `LineRedactor` does not know about stdin and stdout,
 it is more general and takes infile and outfile arguments.
 This generalization is useful because now `LineRedactor`
-can be run indepedently of `sys` 
+can be run independently of `sys` 
 as for example
 in a test suite using StringIO instances as files.
 
@@ -199,18 +199,21 @@ Additionally, it isolates and encapsulates the use of re.sub.
 
     class LineRedactor(LineFilter):
         replace_ip = Replacer(
+                # With an abundance of caution,
+                # the word delimiter "\b" which might normally
+                # delimit a regex for an IP address, is omitted here.
                 pattern_string=(
-                        r'\b('
+                        r'('
                         r'25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?'
                         r'('
                         r'\.'
                         r'25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?'
                         r'){3}'
-                        r'\b)'),
+                        r')'),
                 repl=lambda match: ''.join(
                         '.' if c == '.' else 'X' for c in match.group(1)))
         replace_password = Replacer(
-                pattern_string=r'(?i)("password" )"(.*?)"',
+                pattern_string=r'(?i)("password": )"(.*?)"',
                 repl=r'\1"REDACTED"')
 
         def filter(self, line):
