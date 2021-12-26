@@ -116,6 +116,13 @@ The files are huge and must be processed in a pipeline.
 A program is required which reads the logs on stdin,
 and writes the redacted logs to stdout.
 
+The redaction is straight forward.
+* All IP addresses must have their digits replaced with "X".\
+  IP addresses are 4 8-bit numbers (0-255) separated by ".".
+* All passwords must be replaced with "REDACTED".\
+  The passwords are encoded in a JSON dict
+  as the value of the "password" key (using a case-insensitive match).
+
 This example is simple beause there is no error handling.
 The opening and management of the files will be handled by the pipeline
 of which this program will be a part.
@@ -165,13 +172,6 @@ from a more general class, perhaps Filter,
 as we've already achieved our purpose
 in that LineFilter only does one thing
 and it frees LineRedactor to only implement the redaction.
-
-The redaction is straight forward.
-* All IP addresses must have their digits replaced with "X".\
-  IP addresses are 4 8-bit numbers (0-255) separated by ".".
-* All passwords must be replaced with "REDACTED".\
-  The passwords are encoded in a JSON dict
-  as the value of the "password" key (using a case-insensitive match).
 
 We'll use the regular expression substitution method re.sub
 to replace the passwords and IP addresses.
