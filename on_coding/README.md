@@ -138,9 +138,8 @@ in a test suite using StringIO instances as files.
 
 `LineRedactor.__call__` will redact the input file a line at a time.
 Read a line, and write the redacted line.
-`LineRedactor` is an instance (i.e. sub-class)
-of a more general program,
-a LineFilter, which filters its input a line at a time.
+`LineRedactor` is an instance of a more general program,
+`LineFilter`, which filters its input a line at a time.
 
     class LineFilter:
         def __init__(self, infile, outfile):
