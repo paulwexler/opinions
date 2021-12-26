@@ -178,8 +178,8 @@ We'll use the regular expression substitution method re.sub
 to replace the passwords and IP addresses.
 We'll replace the passwords first in case they happen to match an IP.
 
-The replacement string will reference groups in the pattern string
-so ideally, both strings should be defined in the same place.
+The replacement string will reference groups in the pattern string,
+so ideally both strings should be defined in the same place.
 The problem is
 that compilation of a pattern string into a pattern is costly
 and ought to take place during initialization,
