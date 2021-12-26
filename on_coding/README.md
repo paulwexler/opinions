@@ -168,7 +168,7 @@ and it frees LineRedactor to only implement the redaction.
 
 The redaction is straight forward.
 * All IP addresses must have their digits replaced with "X".\
-  IP addresses are 4 8-bit numbers separated by ".".
+  IP addresses are 4 8-bit numbers (0-255) separated by ".".
 * All passwords must be replaced with "REDACTED".\
   The passwords are encoded in a JSON dict
   as the value of the "password" key (using a case-insensitive match).
