@@ -210,10 +210,10 @@ Additionally, it isolates and encapsulates the use of re.sub.
                 # delimit a regex for an IP address, is omitted here.
                 pattern_string=(
                         r'('
-                        r'25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?'
+                        r'(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)'
                         r'('
                         r'\.'
-                        r'25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?'
+                        r'(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)'
                         r'){3}'
                         r')'),
                 repl=lambda match: ''.join(
