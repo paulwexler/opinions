@@ -158,7 +158,7 @@ Read a line, and write the redacted line.
                 self.outfile.write(self.filter(line))
 
         def filter(self, line):
-            raise NotImplmentedError
+            raise NotImplementedError
 
 
     class LineRedactor(LineFilter):
