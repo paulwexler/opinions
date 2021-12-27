@@ -188,6 +188,8 @@ which is initialized with both strings
 and invokes re.sub when called.
 Additionally, it isolates and encapsulates the use of re.sub.
 
+    import re
+
     class Replacer:
         def __init__(self, pattern_string, repl):
             self.pattern = re.compile(pattern_string)
