@@ -177,14 +177,18 @@ We'll use the regular expression substitution method re.sub
 to replace the passwords and IP addresses.
 We'll replace the passwords first in case they happen to match an IP.
 
-The replacement string will reference groups in the pattern string,
-so ideally both strings should be defined in the same place.
-The problem is
-that compilation of a pattern string into a pattern is costly
+`repl`, the replacement string or function,
+will reference groups in the `pattern_string`,
+so ideally both should be defined in the same place.
+The problem with using
+
+    re.sub(pattern_string, repl, string)
+
+is that compilation of a pattern string into a pattern is costly
 and ought to take place during initialization,
 not inside a loop.
 The solution is a `Replacer` class
-which is initialized with both strings
+which is initialized with both
 and invokes re.sub when called.
 Additionally, it isolates and encapsulates the use of re.sub.
 
