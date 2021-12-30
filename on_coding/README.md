@@ -61,6 +61,7 @@ Examine the solution obtained.
   Are the names correct?
   Is the code fully factored?
   Can the classes encapsulate more details?
+  Are the classes too complex?
 
 
 ## Partitioning the task.
