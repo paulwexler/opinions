@@ -144,7 +144,6 @@ as for example
 in a test suite using StringIO instances as files.
 
 `LineRedactor.__call__` will redact the input file a line at a time.
-Read a line, and write the redacted line.
 `LineRedactor` is an instance of a more general program,
 `LineFilter`, which filters its input a line at a time.
 
@@ -178,19 +177,20 @@ to replace the passwords and IP addresses.
 We'll replace the passwords first in case they happen to match an IP.
 
 `repl`, the replacement string or function,
-will reference groups in the `pattern_string`,
+may reference groups in the `pattern_string`,
 so ideally both should be defined in the same place.
 The problem with using
 
-    re.sub(pattern_string, repl, string)
+    def filter(self, line):
+        re.sub(pattern_string, repl, line)
 
 is that compilation of a pattern string into a pattern is costly
 and ought to take place during initialization,
 not inside a loop.
 The solution is a `Replacer` class
 which is initialized with both
-and invokes re.sub when called.
-Additionally, it isolates and encapsulates the use of re.sub.
+and invokes `re.sub` when called.
+Additionally, it isolates and encapsulates the use of `re`.
 
     import re
 
@@ -224,4 +224,3 @@ Additionally, it isolates and encapsulates the use of re.sub.
 
         def filter(self, line):
             return self.replace_ip(self.replace_password(line))
-
