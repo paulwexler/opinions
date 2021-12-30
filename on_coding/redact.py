@@ -32,7 +32,7 @@ class LineFilter:
         '''
         return filtered `line`
         '''
-        raise NotImplementedError
+        raise NotImplementedError   # pragma: no cover
 
 
 class LineRedactor(LineFilter):
@@ -64,6 +64,7 @@ class LineRedactor(LineFilter):
         return self.replace_ip(self.replace_password(line))
 
 
-if __name__ == '__main__':
+if __name__ == '__main__':  # pragma: no cover
     import sys
+
     LineRedactor(sys.stdin, sys.stdout)()
