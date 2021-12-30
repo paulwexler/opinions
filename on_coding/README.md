@@ -189,8 +189,8 @@ The problem with using
 is that compilation of a pattern string into a pattern is costly
 and ought to take place during initialization,
 not inside a loop.
-The solution is a `Replacer` class
-which is initialized with both
+A solution is the `Replacer` class
+which is initialized with `pattern_string`, and `repl`,
 and invokes `re.sub` when called.
 Additionally, it isolates and encapsulates the use of `re`.
 
