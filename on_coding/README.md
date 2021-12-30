@@ -54,6 +54,8 @@ Carry out the plan.
   Partition the task at hand into independent sub-tasks.
   This is a "breadth-first" recursive technique
   applicable at each stage of the partition.
+  Each sub-task requires a plan as in 3.
+  and a solution as in 4.
 
 Examine the solution obtained.
 
