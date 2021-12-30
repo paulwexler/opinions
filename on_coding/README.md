@@ -136,8 +136,7 @@ of which this program will be a part.
         LineRedactor(sys.stdin, sys.stdout)()
 
 The mainline needs to process stdin and stdout
-so it instantiates `LineRedactor` with `sys.stdin` and `sys.stdout`
-and then calls it.
+so it calls a `LineRedactor` instantiated with `sys.stdin` and `sys.stdout`.
 
 `LineRedactor` does not know about stdin and stdout,
 it is more general and takes infile and outfile arguments.
