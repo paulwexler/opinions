@@ -130,25 +130,28 @@ This example is simple because there is no error handling.
 The opening and management of the files will be handled by the pipeline
 of which this program will be a part.
 
+The mainline needs to process stdin and stdout
+so it calls a `LineRedactor` instantiated with `sys.stdin` and `sys.stdout`.
+
+```python
     if __name__ == '__main__':
         import sys
 
         LineRedactor(sys.stdin, sys.stdout)()
-
-The mainline needs to process stdin and stdout
-so it calls a `LineRedactor` instantiated with `sys.stdin` and `sys.stdout`.
+```
 
 `LineRedactor` does not know about stdin and stdout,
 it is more general and takes infile and outfile arguments.
 This generalization is useful because now `LineRedactor`
 can be run independently of `sys` 
 as for example
-in a test suite using StringIO instances as files.
+in a test suite using `io.StringIO` instances as files.
 
 `LineRedactor.__call__` will redact the input file a line at a time.
 `LineRedactor` is an instance of a more general program,
 `LineFilter`, which filters its input a line at a time.
 
+```python
     class LineFilter:
         def __init__(self, infile, outfile):
             self.infile = infile
@@ -166,15 +169,16 @@ in a test suite using StringIO instances as files.
         ...
         def filter(self, line):
             ...
+```
 
 
-There is no point in deriving LineFilter
-from a more general class, perhaps Filter,
+There is no point in deriving `LineFilter`
+from a more general class, perhaps `Filter`,
 as we've already achieved our purpose
-in that LineFilter only does one thing
-and it frees LineRedactor to only implement the redaction.
+in that `LineFilter` only does one thing
+and it frees `LineRedactor` to only implement the redaction.
 
-We'll use the regular expression substitution method re.sub
+We'll use the regular expression substitution method `re.sub`
 to replace the passwords and IP addresses.
 We'll replace the passwords first in case they happen to match an IP.
 
@@ -183,8 +187,10 @@ may reference groups in the `pattern_string`,
 so ideally both should be defined in the same place.
 The problem with using
 
+```python
     def filter(self, line):
         re.sub(pattern_string, repl, line)
+```
 
 is that compilation of a pattern string into a pattern is costly
 and ought to take place during initialization,
@@ -194,6 +200,7 @@ which is initialized with `pattern_string`, and `repl`,
 and invokes `re.sub` when called.
 Additionally, it isolates and encapsulates the use of `re`.
 
+```python
     import re
 
     class Replacer:
@@ -226,3 +233,4 @@ Additionally, it isolates and encapsulates the use of `re`.
 
         def filter(self, line):
             return self.replace_ip(self.replace_password(line))
+```
