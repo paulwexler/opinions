@@ -133,7 +133,7 @@ of which this program will be a part.
 The mainline needs to process stdin and stdout
 so it calls a `LineRedactor` instantiated with `sys.stdin` and `sys.stdout`.
 
-    ```python
+    ```ruby
     if __name__ == '__main__':
         import sys
 
@@ -151,7 +151,7 @@ in a test suite using `io.StringIO` instances as files.
 `LineRedactor` is an instance of a more general program,
 `LineFilter`, which filters its input a line at a time.
 
-    ```python
+    ```ruby
     class LineFilter:
         def __init__(self, infile, outfile):
             self.infile = infile
@@ -187,7 +187,7 @@ may reference groups in the `pattern_string`,
 so ideally both should be defined in the same place.
 The problem with using
 
-    ```python
+    ```ruby
     def filter(self, line):
         re.sub(pattern_string, repl, line)
     ```
@@ -200,7 +200,7 @@ which is initialized with `pattern_string`, and `repl`,
 and invokes `re.sub` when called.
 Additionally, it isolates and encapsulates the use of `re`.
 
-    ```python
+    ```ruby
     import re
 
     class Replacer:
