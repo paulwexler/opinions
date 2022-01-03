@@ -133,12 +133,12 @@ of which this program will be a part.
 The mainline needs to process stdin and stdout
 so it calls a `LineRedactor` instantiated with `sys.stdin` and `sys.stdout`.
 
-    ```ruby
+```python
     if __name__ == '__main__':
         import sys
 
         LineRedactor(sys.stdin, sys.stdout)()
-    ```
+```
 
 `LineRedactor` does not know about stdin and stdout,
 it is more general and takes infile and outfile arguments.
@@ -151,7 +151,7 @@ in a test suite using `io.StringIO` instances as files.
 `LineRedactor` is an instance of a more general program,
 `LineFilter`, which filters its input a line at a time.
 
-    ```ruby
+```python
     class LineFilter:
         def __init__(self, infile, outfile):
             self.infile = infile
@@ -169,7 +169,7 @@ in a test suite using `io.StringIO` instances as files.
         ...
         def filter(self, line):
             ...
-    ```
+```
 
 
 There is no point in deriving `LineFilter`
@@ -187,10 +187,10 @@ may reference groups in the `pattern_string`,
 so ideally both should be defined in the same place.
 The problem with using
 
-    ```ruby
+```python
     def filter(self, line):
         re.sub(pattern_string, repl, line)
-    ```
+```
 
 is that compilation of a pattern string into a pattern is costly
 and ought to take place during initialization,
@@ -200,7 +200,7 @@ which is initialized with `pattern_string`, and `repl`,
 and invokes `re.sub` when called.
 Additionally, it isolates and encapsulates the use of `re`.
 
-    ```ruby
+```python
     import re
 
     class Replacer:
@@ -233,4 +233,4 @@ Additionally, it isolates and encapsulates the use of `re`.
 
         def filter(self, line):
             return self.replace_ip(self.replace_password(line))
-        ```
+```
