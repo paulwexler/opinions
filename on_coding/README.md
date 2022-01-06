@@ -189,7 +189,7 @@ The problem with using
 
 ```python
     def filter(self, line):
-        re.sub(pattern_string, repl, line)
+        return re.sub(pattern_string, repl, line)
 ```
 
 is that compilation of a pattern string into a pattern is costly
