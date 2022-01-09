@@ -104,7 +104,7 @@ and not sprinkled throughout the implementation.
 
 Keep the code factored as you go.
 When you have to do the same thing again only slightly differently,
-do not cut-paste-tweak.
+do not copy-paste-tweak.
 Instead, parameterize the operation
 and call it with different arguments.
 
