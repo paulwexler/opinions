@@ -1,6 +1,7 @@
 '''
 This filter redacts passwords and IP addresses
 '''
+# pylint: disable=too-few-public-methods
 
 import re
 
@@ -38,30 +39,35 @@ class LineFilter:
 class LineRedactor(LineFilter):
     '''
     This filter redacts each line
+    Replace the password first because it may contain an IP.
     '''
-    replace_ip = Replacer(
-            # With an abundance of caution,
-            # the word delimiter "\b" which might normally
-            # delimit a regex for an IP address, is omitted here.
-            pattern_string=(
-                    r'('
-                    r'(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)'
-                    r'('
-                    r'\.'
-                    r'(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)'
-                    r'){3}'
-                    r')'),
-            repl=lambda match: ''.join(
-                    '.' if c == '.' else 'X' for c in match.group(1)))
-    replace_password = Replacer(
-            pattern_string=r'(?i)("password": )"(.*?)"',
-            repl=r'\1"REDACTED"')
+    replacers = dict(
+            replace_password=Replacer(
+                    pattern_string=r'(?i)("password": )"(.*?)"',
+                    repl=r'\1"REDACTED"'),
+            replace_id=Replacer(
+                    # With an abundance of caution,
+                    # the word delimiter "\b" which might normally
+                    # delimit a regex for an IP address, is omitted here.
+                    pattern_string=(
+                            r'('
+                            r'(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)'
+                            r'('
+                            r'\.'
+                            r'(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)'
+                            r'){3}'
+                            r')'),
+                    repl=lambda match: ''.join(
+                            '.' if c == '.' else 'X' for c in match.group(1))))
 
     def filter(self, line):
         '''
         return filtered `line`
+        Reduce all the replacers starting with line.
         '''
-        return self.replace_ip(self.replace_password(line))
+        for replacer in self.replacers.values():
+            line = replacer(line)
+        return line
 
 
 if __name__ == '__main__':  # pragma: no cover

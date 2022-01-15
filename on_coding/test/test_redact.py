@@ -2,18 +2,7 @@ import io
 
 import redact
 
-def test_no_change():
-    intext = '''
-            This string has
-            nothing in it to substitute.'''
-    expect = intext
-    infile = io.StringIO(intext)
-    outfile = io.StringIO()
-    redact.LineRedactor(infile, outfile)()
-    outtext = outfile.getvalue()
-    assert expect == outtext, f'{expect} != {outtext}'
-    
-def test_changes():
+def changes():
     intext = '''
             This line has a password: "foo": "doo", "passworD": "PW"
             This line has one IP: 0.0.0.12 n0t.12.34.56 123'''
@@ -23,3 +12,16 @@ def test_changes():
     redact.LineRedactor(infile, outfile)()
     outtext = outfile.getvalue()
     assert expect == outtext, f'{expect} != {outtext}'
+    return outtext
+
+def no_change(intext):
+    expect = intext
+    infile = io.StringIO(intext)
+    outfile = io.StringIO()
+    redact.LineRedactor(infile, outfile)()
+    outtext = outfile.getvalue()
+    assert expect == outtext, f'{expect} != {outtext}'
+
+def test_redaction_complete():
+    outtext = changes()
+    no_change(outtext)
