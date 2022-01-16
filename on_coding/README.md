@@ -249,7 +249,7 @@ We'd have to add a call to it in `filter`.
 We can reduce this coupling by noting that `filter`
 does not need to know what each `Replacer` does.
 It just needs to reduce `line` by a list of `Replacer`.
-While we could put the `Replace` instances in a `list`,
+While we could put the `Replacer` instances in a `list`,
 it would then be unclear what each instance does.
 Instead we'll use `replacers`, a `dict` of `Replacer` indexed by replacer name,
 so `filter` can reduce `self.replacers.values()`.
