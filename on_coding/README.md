@@ -234,3 +234,26 @@ Additionally, it isolates and encapsulates the use of `re`.
         def filter(self, line):
             return self.replace_ip(self.replace_password(line))
 ```
+
+We could stop here, but as this is an example,
+we'll demonstrate a technique for factoring executable code into data.
+
+Note that `LineRedactor.filter` "knows" a lot about what the program does.
+It "knows" `replace_ip`, `replace_password`,
+and to use `replace_password` first.
+The coupling
+(between `filter` and `LineRedactor` class variables)
+would only grow if we added another `Replacer` instance.
+We'd have to add a call to it in `filter`.
+
+We can reduce this coupling by noting that `filter`
+does not need to know what each `Replacer` does.
+It just needs to reduce `line` by a list of `Replacer`.
+While we could put the `Replace` instances in a `list`,
+it would then be unclear what each instance does.
+Instead we'll use `replacers`, a `dict` of `Replacer` indexed by replacer name,
+so `filter` can reduce `self.replacers.values()`.
+
+Here is the complete program: [redact.py][redact_py]
+
+[redact_py]: ./redact.py
