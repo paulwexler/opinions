@@ -56,6 +56,8 @@ Carry out the plan.
   applicable at each stage of the partition.
   Each sub-task requires a plan as in 3.
   and a solution as in 4.
+  The goal is a collection of loosely coupled
+  and highly cohesive components.
 
 Examine the solution obtained.
 
