@@ -185,13 +185,16 @@ to replace the passwords and IP addresses.
 We'll replace the passwords first in case they happen to match an IP.
 
 `repl`, the replacement string or function,
-may reference groups in the `pattern_string`,
-so ideally both should be defined in the same place.
-The problem with using
+may reference groups in the `pattern_string`.
+This coupling is unavoidable
+so ideally both arguments should be declared in the same place.
+The problem with calling `re.sub` directly, as in
 
 ```python
     def filter(self, line):
-        return re.sub(pattern_string, repl, line)
+        filtered = re.sub(pattern_string, repl, line)
+        ...
+        return filtered
 ```
 
 is that compilation of a pattern string into a pattern is costly
@@ -238,7 +241,8 @@ Additionally, it isolates and encapsulates the use of `re`.
 ```
 
 We could stop here, but as this is an example,
-we'll demonstrate a technique for factoring executable code into data.
+we'll demonstrate a technique to reduce "coupling"
+by factoring executable code into data.
 
 Note that `LineRedactor.filter` "knows" a lot about what the program does.
 It "knows" `replace_ip`, `replace_password`,
