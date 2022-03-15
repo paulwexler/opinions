@@ -154,7 +154,7 @@ so it calls a `LineRedactor` instantiated with `sys.stdin` and `sys.stdout`.
 `LineRedactor` does not know about stdin and stdout,
 it is more general and takes infile and outfile arguments.
 This generalization is useful because now `LineRedactor`
-can be run independently of `sys` 
+can be run independently of `sys`
 as for example
 in a test suite using `io.StringIO` instances as files.
 
@@ -249,8 +249,8 @@ Additionally, it isolates and encapsulates the use of `re`.
             return self.replace_ip(self.replace_password(line))
 ```
 
-We could stop here, but as this is an example,
-we'll demonstrate a technique to reduce "coupling"
+We could stop here, but there is an unintended "coupling"
+that can be easily reduced
 by factoring executable code into data.
 
 Note that `LineRedactor.filter` "knows" a lot about what the program does.
