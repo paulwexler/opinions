@@ -113,11 +113,11 @@ and call it with different arguments.
 <a name="f1"><sup>1</sup></a>
 <sup>
 : The goal is highly cohesive components.
-If it does two things, it is half as cohesive as if it did one thing.
+If a component does two things, it is half as cohesive as if it did one thing.
 </sup>
 [*](#a1)
 ```python
-component.cohesion = 2 ** - (component.number_of_things_it_does - 1)
+component.cohesion = 2 ** (1 - component.number_of_things_it_does)
 ```
 
 ## Simple example.
