@@ -96,7 +96,7 @@ As the decomposition proceeds,
 each sub-task must do,
 or accomplish,
 or be responsible for
-exactly one thing.
+exactly one thing <sup>[1](#f1)</sup>.
 Its implementation must fit on one screen.
 
 Isolate the external interfaces.
@@ -110,6 +110,11 @@ do not copy-paste-tweak.
 Instead, parameterize the operation
 and call it with different arguments.
 
+<a name="f1">1</a>: The goal is highly cohesive components.
+If it does two things, it is half as cohesive as if it did one thing.
+```python
+    component.cohesion = 2 ** - (component.number_of_things_it_does - 1)
+```
 
 ## Simple example.
 
