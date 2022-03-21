@@ -109,6 +109,11 @@ When you have to do the same thing again only slightly differently,
 do not copy-paste-tweak.
 Instead, parameterize the operation
 and call it with different arguments.
+Factoring the code may consolidate the implementation,
+or,
+the need for factorization may reveal
+the need for a higher order object
+not yet considered by the previous analysis.
 
 <a name="f1"><sup>1</sup></a>
 <sup>
