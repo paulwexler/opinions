@@ -96,7 +96,7 @@ As the decomposition proceeds,
 each sub-task must do,
 or accomplish,
 or be responsible for
-exactly one thing.
+exactly one thing <sup id="a1">[1](#f1)</sup>.
 Its implementation must fit on one screen.
 
 Isolate the external interfaces.
@@ -110,6 +110,15 @@ do not copy-paste-tweak.
 Instead, parameterize the operation
 and call it with different arguments.
 
+<a name="f1"><sup>1</sup></a>
+<sup>
+: The goal is highly cohesive components.
+If a component does two things, it is half as cohesive as if it did one thing.
+</sup>
+[*](#a1)
+```python
+component.cohesion = 2 ** (1 - component.number_of_things_it_does)
+```
 
 ## Simple example.
 
@@ -145,9 +154,9 @@ so it calls a `LineRedactor` instantiated with `sys.stdin` and `sys.stdout`.
 `LineRedactor` does not know about stdin and stdout,
 it is more general and takes infile and outfile arguments.
 This generalization is useful because now `LineRedactor`
-can be run independently of `sys` 
+can be run independently of `sys`
 as for example
-in a test suite using `io.StringIO` instances as files.
+in a [test suite][test_redact_py] using `io.StringIO` instances as files.
 
 `LineRedactor.__call__` will redact the input file a line at a time.
 `LineRedactor` is an instance of a more general program,
@@ -240,8 +249,8 @@ Additionally, it isolates and encapsulates the use of `re`.
             return self.replace_ip(self.replace_password(line))
 ```
 
-We could stop here, but as this is an example,
-we'll demonstrate a technique to reduce "coupling"
+We could stop here, but there is an unintended "coupling"
+that can be easily reduced
 by factoring executable code into data.
 
 Note that `LineRedactor.filter` "knows" a lot about what the program does.
@@ -263,3 +272,4 @@ so `filter` can reduce `self.replacers.values()`.
 Here is the complete program: [redact.py][redact_py]
 
 [redact_py]: ./redact.py
+[test_redact_py]: ./test/test_redact.py
