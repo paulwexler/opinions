@@ -156,7 +156,7 @@ it is more general and takes infile and outfile arguments.
 This generalization is useful because now `LineRedactor`
 can be run independently of `sys`
 as for example
-in a test suite using `io.StringIO` instances as files.
+in a [test suite][test_redact_py] using `io.StringIO` instances as files.
 
 `LineRedactor.__call__` will redact the input file a line at a time.
 `LineRedactor` is an instance of a more general program,
@@ -272,3 +272,4 @@ so `filter` can reduce `self.replacers.values()`.
 Here is the complete program: [redact.py][redact_py]
 
 [redact_py]: ./redact.py
+[test_redact_py]: ./test/test_redact.py
