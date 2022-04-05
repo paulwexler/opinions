@@ -109,16 +109,29 @@ When you have to do the same thing again only slightly differently,
 do not copy-paste-tweak.
 Instead, parameterize the operation
 and call it with different arguments.
-Factoring the code may consolidate the implementation,
-or,
+
+Factoring the code will generally consolidate the implementation,
+however,
 the need for factorization may reveal
 the need for a higher order object
 not yet considered by the previous analysis.
+It is precisely at this juncture,
+as well as when the input domain or the output requirements change,
+that the choice of loosely coupled,
+highly cohesive (and necessarily small),
+components pays off:
+some components may be altered (it won't take long),
+others may be scrapped (so what!),
+and new ones may be written (it won't take too long),
+but everything else remains unchanged!
 
 <a name="f1"><sup>1</sup></a>
 <sup>
 : The goal is highly cohesive components.
 If a component does two things, it is half as cohesive as if it did one thing.
+Its cohesion deteriorates exponentially
+because the number of possible interactions
+between the things it does grows exponentially.
 </sup>
 [*](#a1)
 ```python
