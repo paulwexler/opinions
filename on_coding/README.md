@@ -131,7 +131,7 @@ but everything else remains unchanged!
 If a component does two things, it is half as cohesive as if it did one thing.
 Its cohesion deteriorates exponentially
 because the number of possible interactions
-between the things it does grows exponentailly.
+between the things it does grows exponentially.
 </sup>
 [*](#a1)
 ```python
