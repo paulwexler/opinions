@@ -58,7 +58,8 @@ class LineRedactor(LineFilter):
                             r'){3}'
                             r')'),
                     repl=lambda match: ''.join(
-                            '.' if c == '.' else 'X' for c in match.group(1))))
+                            '.' if c == '.' else 'X'
+                                    for c in match.group(1))))
 
     def filter(self, line):
         '''
