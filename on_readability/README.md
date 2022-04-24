@@ -14,7 +14,7 @@ While music notation has had centuries to develop,
 coding has had only decades.
 
 A good manuscript maintains a consistant redundency
-beteen the formal rules
+between the formal rules
 and the informal style.
 For example,
 formally, the half note gets two beats
@@ -52,7 +52,7 @@ It is an extension of what makes indentation so powerful.
    >>> message_string = (
    ...         "This string is broken up into"
    ...         " smaller pieces so scrolling is"
-   ...         " not necessary to see all of it.
+   ...         " not necessary to see all of it."
    ...         " Please note the leading spaces.")
    ```
 3. When an expression is complicated,
