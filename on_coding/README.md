@@ -100,7 +100,7 @@ Its implementation must fit on one screen.
 Isolate the external interfaces.
 Encapsulate the knowledge required to use an external resource.
 That knowledge should be centralized
-and not sprinkled throughout the implementation.
+and not sprinkled throughout the implementation <sup id="a2">[2](#f2)</sup>.
 
 Keep the code factored as you go.
 When you have to do the same thing again only slightly differently,
@@ -132,9 +132,23 @@ because the number of possible interactions
 between the things it does grows exponentially.
 </sup>
 [*](#a1)
+
 ```python
 component.cohesion = 2 ** (1 - component.number_of_things_it_does)
 ```
+
+<a name="f2"><sup>2</sup></a>
+<sup>
+: Your knowledge of the resource may grow,
+or patterns of error handling may be required
+for errors which did not appear
+during the prototyping of the resource
+but do appear during actual use.
+In any case, if the usage is isolated,
+the isolate can be fixed or improved
+independently of its users.
+</sup>
+[*](#a2)
 
 ## Simple example.
 
