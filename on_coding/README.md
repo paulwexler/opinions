@@ -8,8 +8,8 @@ and I've read Georg Polya's "How to Solve It".
 _Understand the problem._
 
 0. Typically, you are presented with a "User story".\
-  It describes the context and what is desired;
-  entirely in the end-user's terms.
+  It describes the context and what is desired
+  in the end user's terms.
   Also typically, only the "happy" path is described in any detail.
   The end user is usually unconcerned with possible "error" paths
   because they don't occur often enough in the existing situation.
