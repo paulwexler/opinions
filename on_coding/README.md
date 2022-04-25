@@ -286,6 +286,13 @@ it would then be unclear what each instance does.
 Instead we'll use `replacers`, a `dict` of `Replacer` indexed by replacer name,
 so `filter` can reduce `self.replacers.values()`.
 
+```python
+        def filter(self, line):
+            for replacer in self.replacers.values():
+                line = replacer(line)
+            return line
+```
+
 Here is the complete program: [redact.py][redact_py]
 
 [redact_py]: ./redact.py
