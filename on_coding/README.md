@@ -5,7 +5,7 @@ and I know how I try to write them now.
 Now I have 45 years of experience
 and I've read Georg Polya's "How to Solve It".
 
-Understand the problem.
+_Understand the problem._
 
 0. Typically, you are presented with a "User story".\
   It describes the context and what is desired;
@@ -30,7 +30,7 @@ Understand the problem.
   Avoid aliases and synonyms.
   Be rigorous.
 
-Find the connection between the input and the output.
+_Find the connection between the input and the output._
 
 3. Devise a plan.\
   First make a model.
@@ -48,7 +48,7 @@ Find the connection between the input and the output.
 4. State the solution.\
   Derive the desired result from operations on the objects.
 
-Carry out the plan.
+_Carry out the plan._
 
 5. Now write the code. \
   Partition the task at hand into independent sub-tasks.
@@ -59,7 +59,7 @@ Carry out the plan.
   The goal is a collection of loosely coupled
   and highly cohesive components.
 
-Examine the solution obtained.
+_Examine the solution obtained._
 
 6. Is there a simpler implementation?\
   Are the names correct?
