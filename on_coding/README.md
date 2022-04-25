@@ -74,21 +74,19 @@ For each task there is the code that does the work,
 and there is the code that provides the context for the work to be done.
 Focus on the latter
 and delegate the former to a sub-task.
-Decide on what the sub-task needs and what it returns,
+Decide on what the sub-task needs and what it does or returns,
 not on how it works.
-The code that actually does the work will have to be written,
-but its ultimate accessibility and utility
-depends on how it is wrapped up.
-Defer this coding as long as possible.
+The code that actually does the work will eventually be written,
+but defer this coding as long as possible.
 
-The decomposition into sub-tasks is aided by the viewpoint
+The decomposition into independent sub-tasks is aided by the viewpoint
 that every piece of code that does something,
 is a particular instance of a more general piece of code.
 As you proceed away from the root of the tree of tasks,
 the code becomes more general.
 Each task understands its situation
 and employs sub-tasks with the particulars from the current context.
-The sub-tasks process their arguments independently of the caller's context.
+The sub-tasks process their input independently of the caller's context.
 In this way, the leaves of the task tree will have no knowledge
 of the particulars of the application they are embedded in.
 
@@ -100,7 +98,7 @@ exactly one thing <sup id="a1">[1](#f1)</sup>.
 Its implementation must fit on one screen.
 
 Isolate the external interfaces.
-Encapsulate the knowledge required to use the external resource.
+Encapsulate the knowledge required to use an external resource.
 That knowledge should be centralized
 and not sprinkled throughout the implementation.
 
