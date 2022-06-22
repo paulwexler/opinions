@@ -343,6 +343,18 @@ If not, the error message should show:
 * what was sent
 * what was expected
 * what was received
+
+For example,
+if the response object is expected to be a dict with a "customers" key
+whose value is a list of dicts with keys "name" and "number",
+whose values are of types "str" and "int" respectively,
+then the response template would be:
+```python
+    response_template = dict(customers=[dict(name=str, number=int)])
+```
+The validation is implemented below as a function.
+In an actual application it would probably be a class method.
+In any case, it isolates and encapsulates the use of `requests`.
 ```python
 def request(request_args: dict, response_template: object):
     response = requests.request(**request_args)
