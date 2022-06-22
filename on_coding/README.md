@@ -329,7 +329,7 @@ Even if the implementation always checks the viability of a reference beforehand
 ```
 instead of:
 ```python
-    x = d['key']
+    x = d['fuzzle']
 ```
 the further downstream from the receipt of the response that this sort of error occurs,
 the more cryptic the error will appear, and the more time it will take to fix.
@@ -344,15 +344,15 @@ If not, the error message should show:
 * what was expected
 * what was received
 ```python
+def request(request_args: dict, response_template: object):
     response = requests.request(**request_args)
     try:
         obj = json.loads(response.text)
+        error = NestedValidator()(obj, response_template)
         ok = True
     except json.decoder.JSONDecodeError as exc:
         error = f'Unable to JSON decode: {exc}'
         ok = False
-    if ok:
-        error = NestedValidator()(obj, template)
     if error:
         response_text = json.dumps(obj, indent=4) if ok else response.text
         raise MyAppError(
@@ -361,8 +361,9 @@ If not, the error message should show:
                 f'{json.dumps(request_args, indent=4)}\n'
                 f'{json.dumps(response_template, indent=4)}\n'
                 f'{response_text}')
+    return obj, response.status_code
 ```
-NestedValidator.__call__ must traverse the `template` recursively,
+`NestedValidator.__call__` must traverse the `template` recursively,
 comparing it to the `obj`,
 and validating as it goes.
 * If the template is None, the obj is valid.
@@ -371,6 +372,7 @@ and validating as it goes.
 * If the template is a dict, every key must be in the obj
   and their values must match.
 * If the template is a list, every element in obj must match template[0].
+
 It returns the first error it finds
 or it returns an empty string if it completes the traversal.
 
