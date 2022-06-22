@@ -309,5 +309,137 @@ so `filter` can reduce `self.replacers.values()`.
 
 Here is the complete program: [redact.py][redact_py]
 
+## Another Example
+
+Many web APIs respond with JSON strings which encode nested objects.
+Applications can expect the response to have a particular structure
+and will be coded accordingly.
+However, if the response has an unexpected structure,
+perhaps because the site is still under development,
+or the API documentation is incomplete or faulty,
+then the code may crash with a `KeyError` or `TypeError`, or some such `Exception`.
+
+Even if the implementation always checks the viability of a reference beforehand:
+```python
+    if isinstance(d, dict):
+        if 'fuzzle' not in d:
+            raise MyAppError('Missing key "fuzzle"')
+    else:
+        raise MyAppError(f'Expected a dict, got "{d}"')
+```
+instead of:
+```python
+    x = d['key']
+```
+the further downstream from the receipt of the response that this sort of error occurs,
+the more cryptic the error will appear, and the more time it will take to fix.
+
+What is needed is the ability for the application to declare what is expected
+and then to check the validity of the response as soon as it arrives.
+If the response is valid, the application can navigate it with impunity.
+If not, the error message should show:
+* what is wrong with the response
+* response status code and response reason
+* what was sent
+* what was expected
+* what was received
+```python
+    response = requests.request(**request_args)
+    try:
+        obj = json.loads(response.text)
+        ok = True
+    except json.decoder.JSONDecodeError as exc:
+        error = f'Unable to JSON decode: {exc}'
+        ok = False
+    if ok:
+        error = NestedValidator()(obj, template)
+    if error:
+        response_text = json.dumps(obj, indent=4) if ok else response.text
+        raise MyAppError(
+                f'{error}\n'
+                f'{response.status_code} {response.reason}\n'
+                f'{json.dumps(request_args, indent=4)}\n'
+                f'{json.dumps(response_template, indent=4)}\n'
+                f'{response_text}')
+```
+NestedValidator.__call__ must traverse the `template` recursively,
+comparing it to the `obj`,
+and validating as it goes.
+* If the template is None, the obj is valid.
+* If the template is a type, the obj must be an instance of that type,
+  otherwise the type of the obj must equal the type of the template.
+* If the template is a dict, every key must be in the obj
+  and their values must match.
+* If the template is a list, every element in obj must match template[0].
+It returns the first error it finds
+or it returns an empty string if it completes the traversal.
+
+As it traverses, it must keep track of its location in case there is an error.
+
+The `error` should be self-explanatory in the context in which it appears.
+`{location of error in the nested object}: {error message}` is sufficient.
+
+A stack of locations is needed to keep track of the nested location
+and a list of locations is needed to print them as a dot-delimited string.
+A list will suffice for the implementation.
+```python
+class NestedLocation(list):
+    def __str__(self):
+        return '.'.join(str(location) for location in self)
+
+    def push(self, location)
+        self.append(location)
+
+
+class NestedValidator:
+    def __init__(self):
+        self.nested_location = NestedLocation()
+        self.error = False
+
+    def __call__(self, obj: object, template: dict) -> str:
+        error = ''
+        if template is not None:
+            template_type = (
+                    template if isinstance(template, type)
+                    else type(template))
+            if not isinstance(obj, template_type):
+                error = f'Not a {template_type}: {obj}'
+            elif isinstance(template, dict):
+                error = self.validate_dict(obj, template)
+            elif isinstance(template, list):
+                error = self.validate_list(obj, template)
+            if self.error is False and error:
+                self.error = True
+                nested_location = (
+                        f'{self.nested_location}: ' if self.nested_location
+                        else '')
+                error = f'{nested_location}{error}'
+        return error
+
+    def validate_dict(self, obj, template):
+        error = ''
+        for key in template.keys():
+            if key in obj:
+                self.nested_location.push(key)
+                error = self(obj[key], template[key])
+                self.nested_location.pop()
+                if error:
+                    break
+            else:
+                error = 'Missing key "{key}"'
+                break
+        return error
+
+    def validate_list(self, obj, template):
+        error = ''
+        for index, element in enumerate(obj):
+            self.nested_location.push(index)
+            error = self(element, template[0])
+            self.nested_location.pop()
+            if error:
+                break
+        return error
+```
+
 [redact_py]: ./redact.py
 [test_redact_py]: ./test/test_redact.py
