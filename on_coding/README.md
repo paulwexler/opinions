@@ -321,15 +321,16 @@ then the code may crash with a `KeyError` or `TypeError`, or some such `Exceptio
 
 Even if the implementation always checks the viability of a reference beforehand:
 ```python
-    if isinstance(d, dict):
-        if 'fuzzle' not in d:
+    if isinstance(data, dict):
+        if 'fuzzle' not in data:
             raise MyAppError('Missing key "fuzzle"')
+        fuzzle = data['fuzzle']
     else:
-        raise MyAppError(f'Expected a dict, got "{d}"')
+        raise MyAppError(f'Expected a dict, got "{data}"')
 ```
 instead of:
 ```python
-    x = d['fuzzle']
+    fuzzle = data['fuzzle']
 ```
 the further downstream from the receipt of the response that this sort of error occurs,
 the more cryptic the error will appear, and the more time it will take to fix.
@@ -350,12 +351,18 @@ whose value is a list of dicts with keys "name" and "number",
 whose values are of types "str" and "int" respectively,
 then the response template would be:
 ```python
-    response_template = dict(customers=[dict(name=str, number=int)])
+    response_template = {'customers': [{'name': str, 'number': int}]}
 ```
-The validation is implemented below as a function.
-In an actual application it would probably be a class method.
+The request with validation is implemented below as a function.
+In an actual application it could be a class method.
 In any case, it isolates and encapsulates the use of `requests`.
 ```python
+import json
+
+import requests
+
+import my_app.errors
+
 def request(request_args: dict, response_template: object):
     response = requests.request(**request_args)
     try:
@@ -367,7 +374,7 @@ def request(request_args: dict, response_template: object):
         ok = False
     if error:
         response_text = json.dumps(obj, indent=4) if ok else response.text
-        raise MyAppError(
+        raise my_app.errors.MyAppError(
                 f'{error}\n'
                 f'{response.status_code} {response.reason}\n'
                 f'{json.dumps(request_args, indent=4)}\n'
@@ -390,10 +397,10 @@ or it returns an empty string if it completes the traversal.
 
 As it traverses, it must keep track of its location in case there is an error.
 
-The `error` should be self-explanatory in the context in which it appears.
+The error should be self-explanatory in the context in which it appears.
 `{location of error in the nested object}: {error message}` is sufficient.
 
-A stack of locations is needed to keep track of the nested location
+A stack of locations is needed to keep track of the nested location,
 and a list of locations is needed to print them as a dot-delimited string.
 A list will suffice for the implementation.
 ```python
@@ -430,7 +437,7 @@ class NestedValidator:
                 error = f'{nested_location}{error}'
         return error
 
-    def validate_dict(self, obj, template):
+    def validate_dict(self, obj: dict, template: dict) -> str:
         error = ''
         for key in template.keys():
             if key in obj:
@@ -444,7 +451,7 @@ class NestedValidator:
                 break
         return error
 
-    def validate_list(self, obj, template):
+    def validate_list(self, obj: list, template: dict) -> str:
         error = ''
         for index, element in enumerate(obj):
             self.nested_location.push(index)
