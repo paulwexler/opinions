@@ -466,9 +466,8 @@ class NestedLocation(list):
         self.append(location)
 
 
-#class Any:
-#    pass
 Any = type('Any', (), {})
+
 
 class NestedValidator:
     def __init__(self):
