@@ -311,6 +311,12 @@ Here is the complete program: [redact.py][redact_py]
 
 ## Another Example
 
+As you proceed away from the root of the tree of tasks,
+the code becomes more general.
+This analysis often leads to the discovery of generic re-usable tools;
+chunks of functionality which are perhaps not difficult to implement,
+but will be used and re-used.
+
 Many web APIs respond with JSON strings which encode nested objects.
 Applications can expect the response to have a particular structure
 and will be coded accordingly.
@@ -332,60 +338,90 @@ instead of:
 ```python
     fuzzle = data['fuzzle']
 ```
+then aside from obscuring the code,
 the further downstream from the receipt of the response that this sort of error occurs,
 the more cryptic the error will appear, and the more time it will take to fix.
 
 What is needed is the ability for the application to declare what is expected
 and then to check the validity of the response as soon as it arrives.
 If the response is valid, the application can navigate it with impunity.
-If not, the error message should show:
+If not, the error message should be sufficient for a developer
+to understand the root cause of the error.
+It should show:
 * what is wrong with the response
 * response status code and response reason
 * what was sent
 * what was expected
 * what was received
 
+Often the response object depends upon the status code
+so the response template is a dict, indexed by status code
+whose values the response object must match.
+
 For example,
-if the response object is expected to be a dict with a "customers" key
+if the status code is 200,
+and the response object is expected to be a dict with a "customers" key
 whose value is a list of dicts with keys "name" and "number",
 whose values are of types "str" and "int" respectively,
+or if the status code is 403 and we don't care what the response object is,
+or if the status code is 404 and the response is expected to be a list of strings,
 then the response template would be:
 ```python
-    response_template = {'customers': [{'name': str, 'number': int}]}
+    response_template = {
+            200: {'customers': [{'name': str, 'number': int}]},
+            403: Any,
+            404: [str]}
 ```
-The request with validation is implemented below as a function.
-In an actual application it could be a class method.
-In any case, it isolates and encapsulates the use of `requests`.
+The request with validation is implemented below as `class Requestor`.
+Its `send` method isolates and encapsulates the use of `requests`.
+
+`requestor.py`
 ```python
 import json
 
 import requests
 
-import my_app.errors
+import nested_validator
 
-def request(request_args: dict, response_template: object):
-    response = requests.request(**request_args)
-    try:
-        obj = json.loads(response.text)
-        error = NestedValidator()(obj, response_template)
-        ok = True
-    except json.decoder.JSONDecodeError as exc:
-        error = f'Unable to JSON decode: {exc}'
-        ok = False
-    if error:
-        response_text = json.dumps(obj, indent=4) if ok else response.text
-        raise my_app.errors.MyAppError(
-                f'{error}\n'
-                f'{response.status_code} {response.reason}\n'
-                f'{json.dumps(request_args, indent=4)}\n'
-                f'{json.dumps(response_template, indent=4)}\n'
-                f'{response_text}')
-    return obj, response.status_code
+class Requestor:
+    class_validator = nested_validator.NestedValidator
+
+    def __init__(self):
+        self.validator = self.class_validator()
+
+    def request(self, request_args: dict, response_template: dict):
+        response = self.send(request_args)
+        try:
+            if response.status_code in response_template:
+                obj = json.loads(response.text) if response.text else None
+                error = self.validator(obj, response_template)
+                ok = True
+            else:
+                raise RuntimeError(
+                        f'Unexpected status code {response.status_code}'
+                        f' is not in {tuple(response_template.keys())}')
+        except json.decoder.JSONDecodeError as exc:
+            error = f'Unable to JSON decode: {exc}'
+            ok = False
+        if error:
+            response_text = json.dumps(obj, indent=4) if ok else response.text
+            raise RuntimeError(
+                    f'{error}\n'
+                    f'{response.status_code} {response.reason}\n'
+                    f'{json.dumps(request_args, indent=4)}\n'
+                    f'{json.dumps(response_template, indent=4)}\n'
+                    f'{response_text}')
+        return obj, response.status_code
+
+    @staticmethod
+    def send(request_args: dict) -> object:
+        response = requests.request(**request_args)
+        return response
 ```
 `NestedValidator.__call__` must traverse the `template` recursively,
 comparing it to the `obj`,
 and validating as it goes.
-* If the template is None, the obj is valid.
+* If the template is an instance of Any, the obj is valid.
 * If the template is a type, the obj must be an instance of that type,
   otherwise the type of the obj must equal the type of the template.
 * If the template is a dict, every key must be in the obj
@@ -402,15 +438,21 @@ The error should be self-explanatory in the context in which it appears.
 
 A stack of locations is needed to keep track of the nested location,
 and a list of locations is needed to print them as a dot-delimited string.
-A list will suffice for the implementation.
+So a list will suffice for the implementation.
+
+`nested_validator.py`
 ```python
 class NestedLocation(list):
     def __str__(self):
         return '.'.join(str(location) for location in self)
 
-    def push(self, location)
+    def push(self, location):
         self.append(location)
 
+
+#class Any:
+#    pass
+Any = type('Any', (), {})
 
 class NestedValidator:
     def __init__(self):
@@ -419,7 +461,7 @@ class NestedValidator:
 
     def __call__(self, obj: object, template: dict) -> str:
         error = ''
-        if template is not None:
+        if not isinstance(template, Any):
             template_type = (
                     template if isinstance(template, type)
                     else type(template))
