@@ -389,28 +389,44 @@ class Requestor:
     def __init__(self):
         self.validator = self.class_validator()
 
+    @staticmethod
+    def error(
+            error: str,
+            response: requests.Response,
+            request_args: dict,
+            response_template: dict,
+            response_text: str) -> str:
+        return (
+                f'{error}\n'
+                f'{response.status_code} {response.reason}\n'
+                f'{json.dumps(request_args, indent=4)}\n'
+                f'{json.dumps(response_template, indent=4)}\n'
+                f'{response_text}')
+
     def request(self, request_args: dict, response_template: dict):
         response = self.send(request_args)
         try:
             if response.status_code in response_template:
                 obj = json.loads(response.text) if response.text else None
+                loaded_ok = True
                 error = self.validator(obj, response_template)
-                ok = True
             else:
                 raise RuntimeError(
                         f'Unexpected status code {response.status_code}'
                         f' is not in {tuple(response_template.keys())}')
         except json.decoder.JSONDecodeError as exc:
+            loaded_ok = False
             error = f'Unable to JSON decode: {exc}'
-            ok = False
         if error:
-            response_text = json.dumps(obj, indent=4) if ok else response.text
-            raise RuntimeError(
-                    f'{error}\n'
-                    f'{response.status_code} {response.reason}\n'
-                    f'{json.dumps(request_args, indent=4)}\n'
-                    f'{json.dumps(response_template, indent=4)}\n'
-                    f'{response_text}')
+            response_text = (
+                    json.dumps(obj, indent=4) if loaded_ok
+                    else response.text)
+            raise RuntimeError(self.error(
+                    error,
+                    response,
+                    request_args,
+                    response_template,
+                    response_text))
         return obj, response.status_code
 
     @staticmethod
