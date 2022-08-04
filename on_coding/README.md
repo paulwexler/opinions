@@ -567,6 +567,7 @@ We need only change `validate` to check for a `tuple`, and add `validate_tuple`:
 ```
 
 Here is the complete program: [nested_validator.py][nested_validator_py]
+
 [nested_validator_py]: ./nested_validator.py
 [redact_py]: ./redact.py
 [test_redact_py]: ./test/test_redact.py
