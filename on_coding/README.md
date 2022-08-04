@@ -519,6 +519,54 @@ class NestedValidator:
             if self.error:
                 break
 ```
+As it happens, some API's may return a variety of responses for the same request.
+For example instead of a list of one string, a single string may be returned.
 
+We can take advantage of the fact that JSON has no tuple type
+and use Python's tuple as metadata to request a choice of templates.
+
+Of course if the application's `response_template` allows choices,
+then the application must determine what was actually returned
+before it can navigate the object with impunity.
+
+Here is an example of a template which accepts a dict or a list of dicts.
+```python
+    response_template = {
+            200: (
+                    {'customers': [{'name': str, 'number': int}]},
+                    [{'customers': [{'name': str, 'number': int}]}])}
+```
+We need only change `validate` to check for a `tuple`, and add `validate_tuple`:
+```python
+    def validate(self, obj, template):
+        if not self.error and not template == Any:
+            if isinstance(template, tuple):
+                self.validate_tuple(obj, template)
+            else:
+                template_type = (
+                        template if isinstance(template, type)
+                        else type(template))
+                if not isinstance(obj, template_type):
+                    self.load_error(f'Not a {template_type}: {obj}')
+                elif isinstance(template, dict):
+                    self.validate_dict(obj, template)
+                elif isinstance(template, list):
+                    self.validate_list(obj, template)
+
+    def validate_tuple(self, obj, template_tuple: tuple):
+        errors = []
+        for template in template_tuple:
+            self.error = ''
+            self.validate(obj, template)
+            if self.error:
+                errors.append(self.error)
+            else:
+                break
+        else:
+            self.load_error('\n'.join(errors))
+```
+
+Here is the complete program: [nested_validator.py][nested_validator_py]
+[nested_validator_py]: ./nested_validator.py
 [redact_py]: ./redact.py
 [test_redact_py]: ./test/test_redact.py
