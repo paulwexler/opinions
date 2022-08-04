@@ -459,6 +459,9 @@ So a list will suffice for the implementation.
 
 `nested_validator.py`
 ```python
+Any = type('Any', (), {})
+
+
 class NestedLocation(list):
     def __str__(self):
         return '.'.join(str(location) for location in self)
@@ -467,57 +470,54 @@ class NestedLocation(list):
         self.append(location)
 
 
-Any = type('Any', (), {})
-
-
 class NestedValidator:
     def __init__(self):
-        self.nested_location = NestedLocation()
-        self.error = False
+        self.nested_location = None
+        self.error = None
 
-    def __call__(self, obj: object, template: dict) -> str:
-        error = ''
-        if not isinstance(template, Any):
+    def __call__(self, obj, template):
+        self.nested_location = NestedLocation()
+        self.error = ''
+        self.validate(obj, template)
+        return self.error
+
+    def load_error(self, error: str):
+        nested_location = (
+                f'{self.nested_location}: ' if self.nested_location
+                else '')
+        self.error = f'{nested_location}{error}'
+
+    def validate(self, obj, template):
+        if not self.error and not template == Any:
             template_type = (
                     template if isinstance(template, type)
                     else type(template))
             if not isinstance(obj, template_type):
-                error = f'Not a {template_type}: {obj}'
+                self.load_error(f'Not a {template_type}: {obj}')
             elif isinstance(template, dict):
-                error = self.validate_dict(obj, template)
+                self.validate_dict(obj, template)
             elif isinstance(template, list):
-                error = self.validate_list(obj, template)
-            if self.error is False and error:
-                self.error = True
-                nested_location = (
-                        f'{self.nested_location}: ' if self.nested_location
-                        else '')
-                error = f'{nested_location}{error}'
-        return error
+                self.validate_list(obj, template)
 
-    def validate_dict(self, obj: dict, template: dict) -> str:
-        error = ''
+    def validate_dict(self, obj: dict, template: dict):
         for key in template.keys():
             if key in obj:
                 self.nested_location.push(key)
-                error = self(obj[key], template[key])
+                self.validate(obj[key], template[key])
                 self.nested_location.pop()
-                if error:
+                if self.error:
                     break
             else:
-                error = 'Missing key "{key}"'
+                self.load_error(f'Missing key "{key}"')
                 break
-        return error
 
-    def validate_list(self, obj: list, template: dict) -> str:
-        error = ''
+    def validate_list(self, obj: list, template: dict):
         for index, element in enumerate(obj):
             self.nested_location.push(index)
-            error = self(element, template[0])
+            self.validate(element, template[0])
             self.nested_location.pop()
-            if error:
+            if self.error:
                 break
-        return error
 ```
 
 [redact_py]: ./redact.py
