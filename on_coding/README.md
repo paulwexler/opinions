@@ -340,7 +340,8 @@ instead of:
 ```
 then aside from obscuring the code,
 the further downstream from the receipt of the response that this sort of error occurs,
-the more cryptic the error will appear, and the more time it will take to fix.
+the more cryptic the error will appear, and the more time it will take
+to understand the root of the problem.
 
 What is needed is the ability for the application to declare what is expected
 and then to check the validity of the response as soon as it arrives.
