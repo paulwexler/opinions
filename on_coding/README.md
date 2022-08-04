@@ -314,8 +314,8 @@ Here is the complete program: [redact.py][redact_py]
 As you proceed away from the root of the tree of tasks,
 the code becomes more general.
 This analysis often leads to the discovery of generic re-usable tools;
-chunks of functionality which are perhaps not difficult to implement,
-but will be used and re-used.
+chunks of functionality which are perhaps not too difficult to implement,
+but can be used in a variety of contexts.
 
 Many web APIs respond with JSON strings which encode nested objects.
 Applications can expect the response to have a particular structure
