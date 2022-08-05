@@ -68,7 +68,7 @@ class NestedValidator:
                 elif isinstance(template, list):
                     self.validate_list(obj, template)
 
-    def validate_dict(self, obj, template: dict):
+    def validate_dict(self, obj: dict, template: dict):
         '''
         validate_dict
         '''
@@ -83,7 +83,7 @@ class NestedValidator:
                 self.load_error(f'Missing key "{key}"')
                 break
 
-    def validate_list(self, obj, template: list):
+    def validate_list(self, obj: list, template: list):
         '''
         validate_list
         '''

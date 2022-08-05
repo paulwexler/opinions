@@ -438,7 +438,7 @@ class Requestor:
 `NestedValidator.__call__` must traverse the `template` recursively,
 comparing it to the `obj`,
 and validating as it goes.
-* If the template is an instance of Any, the obj is valid.
+* If the template is Any, the obj is valid.
 * If the template is a type, the obj must be an instance of that type,
   otherwise the type of the obj must equal the type of the template.
 * If the template is a dict, every key must be in the obj
@@ -511,7 +511,7 @@ class NestedValidator:
                 self.load_error(f'Missing key "{key}"')
                 break
 
-    def validate_list(self, obj: list, template: dict):
+    def validate_list(self, obj: list, template: list):
         for index, element in enumerate(obj):
             self.nested_location.push(index)
             self.validate(element, template[0])
