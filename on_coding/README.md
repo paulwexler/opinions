@@ -5,6 +5,42 @@ and I know how I try to write them now.
 Now I have 45 years of experience
 and I've read Georg Polya's "How to Solve It".
 
+Experience counts.
+It always helps if you've solved a similar problem in the past.
+But I think more importantly, experience gives you the confidence
+to defer the actual coding until you understand the problem.
+So it doesn't take experience to do this, just confidence.
+
+There is a difference between "prototype" coding and "production" coding.
+When you prototype the goal is knowledge, not a usable program.
+None of the prototype code will survive into the production version.
+You prototype to learn how to use a resource,
+to convince yourself you know the code
+necessary to utilize the resource
+to solve the problem at hand.
+
+New programmers, lacking the confidence that comes from experience,
+focus on coding up a usable program as fast as possible.
+The resulting program will embody some useful piece of functionality
+and all is well until it is actually used, or used in a different context,
+and then the real world sets in
+and the input is different or the output needs improvement or who knows what.
+
+Then what happens, as the code gets patched to handle changes,
+is its complexity grows.
+Then the code has complexity because of the choices made in its implementation,
+and not because of the complexity inherent in the problem it is trying to solve.
+It just gets harder and harder to debug, maintain, and alter.
+
+To get the program to embody some piece of functionality is the easy part.
+What takes finesse is to package that functionality
+so the program is resilient to change.
+A program is resilient when small changes to the requirements
+require small changes to the implementation.
+
+Consider the prototyping experiments as "bottom-up" research,
+and write the program "top-down".  Start with `main`.
+
 _Understand the problem._
 
 0. Typically, you are presented with a "User story".\
@@ -160,7 +196,7 @@ The files are huge and must be processed in a pipeline.
 A program is required which reads the logs on stdin,
 and writes the redacted logs to stdout.
 
-The redaction is straight forward.
+The redaction is straightforward.
 * All IP addresses must have their digits replaced with "X".\
   IP addresses are 4 8-bit numbers (0-255) separated by ".".
 * All passwords must be replaced with "REDACTED".\
