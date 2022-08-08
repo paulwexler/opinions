@@ -605,8 +605,42 @@ We need only change `validate` to check for a `tuple`, and add `validate_tuple`:
         else:
             self.load_error('\n'.join(errors))
 ```
-
 Here is the complete program: [nested_validator.py][nested_validator_py]
+
+#### for else
+
+Some people do not like Python's `for else` construct because
+there is no natural language equivalent.
+However, the construct is very compact, useful, and "pythonic".
+Guido found no need to introduce another keyword for it
+because `else` is entirely appropriate - once you realize
+what the implied `if` must be.
+
+A moments thought reveals that either a `for` loop runs to completion,
+or it does not because a `break` was executed.
+In this context, an empty loop has run to completion
+because a `break` was never executed.
+
+Ordinarily, the code immediately following the `for` block
+has no way of deciding whether or not a `break` was executed;
+while the code immediately preceeding the `break` knows that
+the break condition has been met
+and is about to break out of the loop.
+Therefore the only possible use for the `else` clause
+in a `for else` block
+is to handle the case of when the `for` loop has run to completion.
+
+In other words, the implied `if` is **"if a `break` was executed"**.
+And of course that only happens when the break condition was met.
+So `else` only runs when the break condition was not met.
+```python
+    for x in y:
+        if break_condition(x) is True:
+            handle(True)
+            break
+    else:
+        handle(False)
+```
 
 [nested_validator_py]: ./nested_validator.py
 [redact_py]: ./redact.py
