@@ -626,22 +626,23 @@ because a `break` was never executed.
 Ordinarily, the code immediately following the `for` block
 has no way of deciding whether or not a `break` was executed;
 while the code immediately preceeding the `break` knows that
-the break condition has been met
+the break condition is now true
 and is about to break out of the loop.
 Therefore the only possible use for the `else` clause
 in a `for else` block
 is to handle the case of when the `for` loop has run to completion.
 
 In other words, the implied `if` is **"if a `break` was executed"**.
-And of course that only happens when the break condition was met.
-So `else` only runs when the break condition was never met.
+And of course that only happens when the break condition was true.
+So `else` only runs when the break condition was never true.
 ```python
-    for x in y:
+    for x in my_iterable:
         if break_condition(x) is True:
-            handle(True)
+            handle_condition_is_true(x)
             break
+        handle_condition_is_false(x)
     else:
-        handle(False)
+        handle_condition_was_never_true()
 ```
 
 [nested_validator_py]: ./nested_validator.py
