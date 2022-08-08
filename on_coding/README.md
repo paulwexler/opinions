@@ -632,7 +632,7 @@ is to handle the case of when the `for` loop has run to completion.
 
 In other words, the implied `if` is **"if a `break` was executed"**.
 And of course that only happens when the break condition was met.
-So `else` only runs when the break condition was not met.
+So `else` only runs when the break condition was never met.
 ```python
     for x in y:
         if break_condition(x) is True:
