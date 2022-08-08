@@ -316,7 +316,7 @@ Additionally, it isolates and encapsulates the use of `re`.
             return self.replace_ip(self.replace_password(line))
 ```
 
-We could stop here, but there is an unintended "coupling"
+Functionally we are done, but there is an unintended "coupling"
 that can be easily reduced
 by factoring executable code into data.
 
@@ -324,16 +324,20 @@ Note that `LineRedactor.filter` "knows" a lot about what the program does.
 It "knows" `replace_ip`, `replace_password`,
 and to use `replace_password` first.
 The coupling
-(between `filter` and `LineRedactor` class variables)
+(between `LineRedactor.filter` and `LineRedactor` class variables)
 would only grow if we added another `Replacer` instance.
 We'd have to add a call to it in `filter`.
 
 We can reduce this coupling by noting that `filter`
 does not need to know what each `Replacer` does.
 It just needs to reduce `line` by a list of `Replacer`.
+The author of the list cares about the order of the replacements,
+but `filter` does not need to.
+
 While we could put the `Replacer` instances in a `list`,
 it would then be unclear what each instance does.
-Instead we'll use `replacers`, a `dict` of `Replacer` indexed by replacer name,
+Instead we'll use `replacers`, a `dict` of `Replacer`
+indexed by an informative replacer name,
 so `filter` can reduce `self.replacers.values()`.
 
 ```python
