@@ -24,13 +24,15 @@ focus on coding up a usable program as fast as possible.
 The resulting program will embody some useful piece of functionality
 and all is well until it is actually used, or used in a different context,
 and then the real world sets in
-and the input is different or the output needs improvement or who knows what.
+and the input domain is larger or different,
+or the output requirements have changed.
 
-Then what happens, as the code gets patched to handle changes,
+What happens then, as the code gets patched to handle changes,
 is its complexity grows.
-Then the code has complexity because of the choices made in its implementation,
+Then the code acquires complexity
+because of its implementation,
 and not because of the complexity inherent in the problem it is trying to solve.
-It just gets harder and harder to debug, maintain, and alter.
+It just gets harder and harder to debug, maintain, and adapt.
 
 To get the program to embody some piece of functionality is the easy part.
 What takes finesse is to package that functionality
@@ -121,8 +123,8 @@ is a particular instance of a more general piece of code.
 As you proceed away from the root of the tree of tasks,
 the code becomes more general.
 Each task understands its situation
-and employs sub-tasks with the particulars from the current context.
-The sub-tasks process their input independently of the caller's context.
+and employs sub-tasks with the particulars from its current context.
+The sub-tasks process their input independently of their caller's context.
 In this way, the leaves of the task tree will have no knowledge
 of the particulars of the application they are embedded in.
 
