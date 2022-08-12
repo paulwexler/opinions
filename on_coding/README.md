@@ -39,11 +39,15 @@ What takes finesse is to package that functionality
 so the program is resilient to change.
 A program is resilient when small changes to the requirements
 require small changes to the implementation.
+"Coupling" between components is the obstacle to resilience.
+The tighter the coupling the harder it is to make changes.
 
+A strategy is required to develop code with minimal coupling.
 Consider the prototyping experiments as "bottom-up" research,
-and write the program "top-down".  Start with `main`.
+and write the program "top-down".
+Start with the mainline.
 
-_Understand the problem._
+**_Understand the problem._**
 
 0. Typically, you are presented with a "User story".\
   It describes the context and what is desired
@@ -68,7 +72,7 @@ _Understand the problem._
   Avoid aliases and synonyms.
   Be rigorous.
 
-_Find the connection between the input and the output._
+**_Find the connection between the input and the output._**
 
 3. Devise a plan.\
   First make a model.
@@ -86,7 +90,7 @@ _Find the connection between the input and the output._
 4. State the solution.\
   Derive the desired result from operations on the objects.
 
-_Carry out the plan._
+**_Carry out the plan._**
 
 5. Now write the code. \
   Partition the task at hand into independent sub-tasks.
@@ -97,7 +101,7 @@ _Carry out the plan._
   The goal is a collection of loosely coupled
   and highly cohesive components.
 
-_Examine the solution obtained._
+**_Examine the solution obtained._**
 
 6. Is there a simpler implementation?\
   Are the names correct?
