@@ -422,7 +422,7 @@ then the response template would be:
 The request with validation is implemented below as `class Requestor`.
 Its `send` method isolates and encapsulates the use of `requests`.
 
-`requestor.py`
+[requestor.py][requestor_py]
 ```python
 import json
 
@@ -441,43 +441,39 @@ class Requestor:
             error: str,
             response: requests.Response,
             request_args: dict,
-            response_template: dict,
-            response_text: str) -> str:
+            response_template: dict) -> str:
+        try:
+            obj = json.loads(response.text)
+            prettytext = json.dumps(obj, indent=4)
+        except json.decoder.JSONDecodeError:
+            prettytext = response.text
         return (
                 f'{error}\n'
                 f'{response.status_code} {response.reason}\n'
                 f'{json.dumps(request_args, indent=4)}\n'
                 f'{json.dumps(response_template, indent=4)}\n'
-                f'{response_text}')
+                f'{prettytext}')
 
     def request(self, request_args: dict, response_template: dict):
         response = self.send(request_args)
         try:
             if response.status_code in response_template:
                 obj = json.loads(response.text) if response.text else None
-                loaded_ok = True
                 error = self.validator(obj, response_template)
             else:
-                raise RuntimeError(
-                        f'Unexpected status code {response.status_code}'
-                        f' is not in {tuple(response_template.keys())}')
+                error = f'Unexpected status code {response.status_code}'
         except json.decoder.JSONDecodeError as exc:
-            loaded_ok = False
             error = f'Unable to JSON decode: {exc}'
         if error:
-            response_text = (
-                    json.dumps(obj, indent=4) if loaded_ok
-                    else response.text)
             raise RuntimeError(self.error(
                     error,
                     response,
                     request_args,
-                    response_template,
-                    response_text))
+                    response_template))
         return obj, response.status_code
 
     @staticmethod
-    def send(request_args: dict) -> object:
+    def send(request_args: dict) -> requests.Response:
         response = requests.request(**request_args)
         return response
 ```
@@ -618,4 +614,5 @@ Here is the complete program: [nested_validator.py][nested_validator_py]
 
 [nested_validator_py]: ./nested_validator.py
 [redact_py]: ./redact.py
+[requestor_py]: ./requestor.py
 [test_redact_py]: ./test/test_redact.py
