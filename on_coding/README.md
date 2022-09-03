@@ -363,19 +363,19 @@ You send requests by calling `requests.request(...)`
 with a list of keyword arguments.
 Either a `requests.exception.RequestException` is raised
 when the data exchange did not complete
-or a requests.Response object is returned.
+or a `requests.Response` object is returned.
 
-A RequestException can be raised for a variety of reasons.
+A `RequestException` can be raised for a variety of reasons.
 The url could be wrong, the request might be blocked by a firewall,
 the site could be down, the request could have timed out, or some other error.
-Some applications might catch RequestException or specific sub-classes of it
+Some applications might catch `RequestException` or specific sub-classes of it
 and attempt to handle these errors,
 however for many applications,
 there is no need to handle these exceptions,
 as they are due to configuration errors
 or events beyond the control of the program.
 
-On the other hand, when a Response object is returned,
+On the other hand, when a `Response` object is returned,
 it is the responsibility of the application
 to handle it correctly, no matter what it is.
 
@@ -437,17 +437,18 @@ It should show:
 * what was sent
 * what was expected
 * what was received
+
 This information will enable the developer to either fix the program
 or provide proof to the web API that something is amiss.
 
 The implementation falls neatly into two components.
-1. A Requestor \
+1. A Requestor
    * Its `request` method sends the request and handles errors. \
      It returns (the JSON decoded response object, status code) \
-     or it raises RuntimeError.
+     or it raises `RuntimeError`.
    * Its `send` method isolates and encapsulates the use of `requests`.
    * Its `error` method returns a formatted error string.
-   * It need not know what a valid Response is, as it delegates that to the Validator.
+   * It need not know what a valid response is, as it delegates that to the Validator.
 2. A Validator which validates the `Response` object
    to ensure it matches the `response_template`.
 
