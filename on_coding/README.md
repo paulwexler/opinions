@@ -441,7 +441,7 @@ It should show:
 This information will enable the developer to either fix the program
 or provide proof to the web API that something is amiss.
 
-The implementation falls neatly into two components.
+Proceeding from the top down, the implementation falls neatly into two components.
 1. A Requestor
    * Its `request` method sends the request and handles errors. \
      It returns (the JSON decoded response object, status code) \
