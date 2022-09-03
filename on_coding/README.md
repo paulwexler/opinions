@@ -21,10 +21,13 @@ to solve the problem at hand.
 
 New programmers, lacking the confidence that comes from experience,
 focus on coding up a usable program as fast as possible.
-The resulting program will embody some useful piece of functionality
-and all is well until it is actually used, or used in a different context,
+They produce a "prototype" version
+which embodies some useful piece of functionality,
+and runs to completion,
+and all is well until it is actually used,
+or used in a different context,
 and then the real world sets in
-and the input domain is larger or different,
+and the input domain is different than expected,
 or the output requirements have changed.
 
 What happens then, as the code gets patched to handle changes,
@@ -32,7 +35,7 @@ is its complexity grows.
 Then the code acquires complexity
 because of its implementation,
 and not because of the complexity inherent in the problem it is trying to solve.
-It just gets harder and harder to debug, maintain, and adapt.
+It just gets increasingly harder to debug, maintain, and adapt.
 
 To get the program to embody some piece of functionality is the easy part.
 What takes finesse is to package that functionality
@@ -42,10 +45,11 @@ require small changes to the implementation.
 "Coupling" between components is the obstacle to resilience.
 The tighter the coupling the harder it is to make changes.
 
-A strategy is required to develop code with minimal coupling.
+A strategy is required to develop resilient code.
 Consider the prototyping experiments as "bottom-up" research,
 and write the program "top-down".
 Start with the mainline.
+Develop cohesive components and strive always to reduce their coupling.
 
 **_Understand the problem._**
 
