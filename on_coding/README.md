@@ -192,7 +192,7 @@ independently of its users.
 </sup>
 [*](#a2)
 
-## Simple example.
+## A filter example.
 
 As network admin, I need to send log files to a 3rd party auditor.
 These files are text files with one log entry per line.
@@ -245,15 +245,14 @@ in a [test suite][test_redact_py] using `io.StringIO` instances as files.
                 self.outfile.write(self.filter(line))
 
         def filter(self, line):
+            # return the filtered line
             raise NotImplementedError
 
 
     class LineRedactor(LineFilter):
-        ...
         def filter(self, line):
             ...
 ```
-
 
 There is no point in deriving `LineFilter`
 from a more general class, perhaps `Filter`,
@@ -355,20 +354,37 @@ so `filter` can reduce `self.replacers.values()`.
 
 Here is the complete program: [redact.py][redact_py]
 
-## Another Example
+## A `requests` example
 
-As you proceed away from the root of the tree of tasks,
-the code becomes more general.
-This analysis often leads to the discovery of generic re-usable tools;
-chunks of functionality which are perhaps not too difficult to implement,
-but can be used in a variety of contexts.
+The `requests` module provides a clean interface
+to send and receive data to and from web APIs.
+
+You send requests by calling `requests.request(...)`
+with a list of keyword arguments.
+Either a `requests.exception.RequestException` is raised
+when the data exchange did not complete
+or a requests.Response object is returned.
+
+A RequestException can be raised for a variety of reasons.
+The url could be wrong, the request might be blocked by a firewall,
+the site could be down, the request could have timed out, or some other error.
+Some applications might catch RequestException or specific sub-classes of it
+and attempt to handle these errors,
+however for many applications,
+there is no need to handle these exceptions,
+as they are due to configuration errors
+or events beyond the control of the program.
+
+On the other hand, when a Response object is returned,
+it is the responsibility of the application
+to handle it correctly, no matter what it is.
 
 Many web APIs respond with JSON strings which encode nested objects.
 Applications can expect the response to have a particular structure
 and will be coded accordingly.
 However, if the response has an unexpected structure,
 perhaps because the site is still under development,
-or the API documentation is incomplete or faulty,
+or the API documentation was misunderstood or is incomplete or faulty,
 then the code may crash with a `KeyError` or `TypeError`, or some such `Exception`.
 
 Even if the implementation always checks the viability of a reference beforehand:
@@ -386,32 +402,25 @@ instead of:
 ```
 then aside from obscuring the code,
 the further downstream from the receipt of the response that this sort of error occurs,
-the more cryptic the error will appear, and the more time it will take
-to understand the root of the problem.
+the more cryptic the error will appear,
+and the more time it will take to understand what happened.
 
 What is needed is the ability for the application to declare what is expected
 and then to check the validity of the response as soon as it arrives.
-If the response is valid, the application can navigate it with impunity.
-If not, the error message should be sufficient for a developer
-to understand the root cause of the error.
-It should show:
-* what is wrong with the response
-* response status code and response reason
-* what was sent
-* what was expected
-* what was received
 
-Often the response object depends upon the status code
-so the response template is a dict, indexed by status code
-whose values the response object must match.
+Since the format of the returned data can often depend upon the status code,
+and the number of reasonable status codes will be small,
+the application's response template will be a dict,
+indexed by status code,
+whose values are types or objects that the response object must match.
 
-For example,
-if the status code is 200,
-and the response object is expected to be a dict with a "customers" key
+Suppose for example,
+when the status code is 200,
+the response object is expected to be a dict with a "customers" key
 whose value is a list of dicts with keys "name" and "number",
 whose values are of types "str" and "int" respectively,
-or if the status code is 403 and we don't care what the response object is,
-or if the status code is 404 and the response is expected to be a list of strings,
+and when the status code is 403 we don't care what the response object is,
+and when the status code is 404 the response is expected to be a list of strings,
 then the response template would be:
 ```python
     response_template = {
@@ -419,8 +428,28 @@ then the response template would be:
             403: Any,
             404: [str]}
 ```
-The request with validation is implemented below as `class Requestor`.
-Its `send` method isolates and encapsulates the use of `requests`.
+If the response matches the template, the application can navigate it with impunity.
+If not, the error message should be sufficient for a developer
+to understand the root cause of the error.
+It should show:
+* what is wrong with the response (from the program's point of view)
+* `response.status_code` and `response.reason`
+* what was sent
+* what was expected
+* what was received
+This information will enable the developer to either fix the program
+or provide proof to the web API that something is amiss.
+
+The implementation falls neatly into two components.
+1. A Requestor \
+   * Its `request` method sends the request and handles errors. \
+     It returns (the JSON decoded response object, status code) \
+     or it raises RuntimeError.
+   * Its `send` method isolates and encapsulates the use of `requests`.
+   * Its `error` method returns a formatted error string.
+   * It need not know what a valid Response is, as it delegates that to the Validator.
+2. A Validator which validates the `Response` object
+   to ensure it matches the `response_template`.
 
 [requestor.py][requestor_py]
 ```python
