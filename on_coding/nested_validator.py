@@ -20,9 +20,6 @@ class NestedLocation(list):
         self.append(location)
 
 
-Any = type('Any', (), {})
-
-
 class NestedValidator:
     '''
     >>> validator = NestedValidator()
@@ -54,7 +51,7 @@ class NestedValidator:
         depth-first traversal of obj,
         load self.error on first error and stop.
         '''
-        if not self.error and not template == Any:
+        if not self.error and not template == object:
             if isinstance(template, tuple):
                 self.validate_tuple(obj, template)
             else:

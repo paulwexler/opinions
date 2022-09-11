@@ -429,7 +429,7 @@ then the response template would be:
 ```python
     response_template = {
             200: {'customers': [{'name': str, 'number': int}]},
-            403: Any,
+            403: object,
             404: [str]}
 ```
 If the response matches the template, the application can navigate it with impunity.
@@ -514,7 +514,7 @@ class Requestor:
 `NestedValidator.__call__` must traverse the `template` recursively,
 comparing it to the `obj`,
 and validating as it goes.
-* If the template is Any, the obj is valid.
+* If the template is object, the obj is valid.
 * If the template is a type, the obj must be an instance of that type,
   otherwise the type of the obj must equal the type of the template.
 * If the template is a dict, every key must be in the obj
@@ -535,9 +535,6 @@ So a list will suffice for the implementation.
 
 `nested_validator.py`
 ```python
-Any = type('Any', (), {})
-
-
 class NestedLocation(list):
     def __str__(self):
         return '.'.join(str(location) for location in self)
@@ -564,7 +561,7 @@ class NestedValidator:
         self.error = f'{nested_location}{error}'
 
     def validate(self, obj, template):
-        if not self.error and not template == Any:
+        if not self.error and not template == object:
             template_type = (
                     template if isinstance(template, type)
                     else type(template))
@@ -611,14 +608,14 @@ which have a "customers" key, or a dict with no "customers" key:
 ```python
     response_template = {
             200: (
-                    {'customers': Any},
-                    [{'customers': Any}],
+                    {'customers': object},
+                    [{'customers': object}],
                     dict)}
 ```
 We need only change `validate` to check for a `tuple`, and add `validate_tuple`:
 ```python
     def validate(self, obj, template):
-        if not self.error and not template == Any:
+        if not self.error and not template == object:
             if isinstance(template, tuple):
                 self.validate_tuple(obj, template)
             else:

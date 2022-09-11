@@ -35,7 +35,8 @@ class Requestor:
                 f'{error}\n'
                 f'{response.status_code} {response.reason}\n'
                 f'{json.dumps(request_args, indent=4)}\n'
-                f'{json.dumps(response_template, indent=4)}\n'
+                f'{response_template}\n'
+                #f'{json.dumps(response_template, indent=4)}\n'
                 f'{prettytext}')
 
     def request(self, request_args: dict, response_template: dict):
