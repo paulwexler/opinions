@@ -447,7 +447,7 @@ or provide proof to the web API that something is amiss.
 
 Proceeding from the top down, the implementation falls neatly into two components.
 1. A Requestor
-   * Its `request` method sends the request and handles errors. \
+   * Its `request` method handles any errors from sending the request. \
      It returns (the JSON decoded response object, status code) \
      or it raises `RuntimeError`.
    * Its `send` method isolates and encapsulates the use of `requests`.
