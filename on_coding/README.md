@@ -544,12 +544,14 @@ class NestedLocation(list):
 
 
 class NestedValidator:
+    class_nested_location = NestedLocation
+
     def __init__(self):
         self.nested_location = None
         self.error = None
 
     def __call__(self, obj, template):
-        self.nested_location = NestedLocation()
+        self.nested_location = self.class_nested_location()
         self.error = ''
         self.validate(obj, template)
         return self.error
