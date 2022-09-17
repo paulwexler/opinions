@@ -1,22 +1,25 @@
 # On Coding Applications in Python
 
-I remember how I used to write programs
-and I know how I try to write them now.
-Now I have 45 years of experience
-and I've read Georg Polya's "How to Solve It".
+Georg Polya’s brilliant book “How to Solve It”
+provides a set of techniques for how to solve mathematical problems
+that you have never encountered.
+It’s a way of thinking about math problems,
+not an exploration of particular mathematical topics.
 
-Experience counts.
-It always helps if you've solved a similar problem in the past.
-But I think more importantly, experience gives you the confidence
-to defer the actual coding until you understand the problem.
-So it doesn't take experience to do this, just confidence.
+This write up is my effort
+to apply Polya’s method to application programming.
+It is also a distillation of my 45 years of experience
+writing and debugging applications.
+My intention is to provide a generalist, step-by-step approach
+for implementing resilient solutions to problems.
+I have provided examples in Python to illustrate key concepts.
 
+Programming is different from mathematics.
 There is a difference between "prototype" coding and "production" coding.
 When you prototype the goal is knowledge, not a usable program.
 None of the prototype code will survive into the production version.
 You prototype to learn how to use a resource,
-to convince yourself you know the code
-necessary to utilize the resource
+to convince yourself you know the code necessary to utilize the resource
 to solve the problem at hand.
 
 New programmers, lacking the confidence that comes from experience,
@@ -32,12 +35,13 @@ or the output requirements have changed.
 
 What happens then, as the code gets patched to handle changes,
 is its complexity grows.
-Then the code acquires complexity
-because of its implementation,
-and not because of the complexity inherent in the problem it is trying to solve.
+Then the code acquires complexity because of its implementation,
+and not because of the complexity inherent
+in the problem it is trying to solve.
 It just gets increasingly harder to debug, maintain, and adapt.
 
-To get the program to embody some piece of functionality is the easy part.
+To get the program to embody some piece of functionality
+is the easy part.
 What takes finesse is to package that functionality
 so the program is resilient to change.
 A program is resilient when small changes to the requirements
@@ -49,7 +53,8 @@ A strategy is required to develop resilient code.
 Consider the prototyping experiments as "bottom-up" research,
 and write the program "top-down".
 Start with the mainline.
-Develop cohesive components and strive always to reduce their coupling.
+Develop cohesive components
+and strive always to reduce their coupling.
 
 **_Understand the problem._**
 
