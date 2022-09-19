@@ -3,7 +3,7 @@
 Georg Polya’s brilliant book “How to Solve It”
 provides a set of techniques for how to solve mathematical problems
 that you have never encountered.
-It’s a way of thinking about math problems,
+It’s a way of thinking about problems,
 not an exploration of particular mathematical topics.
 
 This write up is my effort
@@ -65,7 +65,8 @@ and strive always to reduce their coupling.
   The end user is usually unconcerned with possible "error" paths
   because they don't occur often enough in the existing situation.
 
-1. You must firm up the response to errors.\
+1. You must be aware of the context the program will run in.\
+  In particular you must firm up the response to errors.
   On bad input or network or other errors,
   do you log and ignore it?
   Abort?
@@ -113,6 +114,7 @@ and strive always to reduce their coupling.
 **_Examine the solution obtained._**
 
 6. Is there a simpler implementation?\
+  Can the coupling be reduced?
   Are the names correct?
   Is the code fully factored?
   Can the classes encapsulate more details?
@@ -201,7 +203,41 @@ independently of its users.
 </sup>
 [*](#a2)
 
-## A filter example.
+## Examples
+
+My intent is to illustrate the concepts of coupling and cohesion.
+
+While the examples shown have gone through several iterations
+and do not reflect the growing pains that transpired
+to arrive in their present form,
+they demonstrate implementations constructed with
+highly cohesive and loosely coupled components.
+
+The actual code includes doc strings
+and scores 10.00/10 with pylint,
+but the following examples omit the doc strings
+because the code is annotated.
+
+As a programming habit,
+I always write the doc strings first,
+then I implement what was described.
+
+How do you know what to put in a doc string?
+You can be sure you completely understand a piece of code
+when you know what it does, how it does it, and why it is needed.
+
+What, how, why.
+
+Of these "why" is the most important, and "how" the least.
+In a language as expressive as Python, the "how" is the code itself.
+It is rare to need in-line comments in Python.
+In other words you seldom need a "how" for the "how".
+The doc string should be the "what".
+As for the "why",
+it derives from the context of the caller's "what",
+and it should be completely transparent to the component's "what".
+
+### A filter example.
 
 As network admin, I need to send log files to a 3rd party auditor.
 These files are text files with one log entry per line.
@@ -337,7 +373,7 @@ by factoring executable code into data.
 Note that `LineRedactor.filter` "knows" a lot about what the program does.
 It "knows" `replace_ip`, `replace_password`,
 and to use `replace_password` first.
-The coupling
+This coupling
 (between `LineRedactor.filter` and `LineRedactor` class variables)
 would only grow if we added another `Replacer` instance.
 We'd have to add a call to it in `filter`.
@@ -351,7 +387,7 @@ but `filter` does not need to.
 While we could put the `Replacer` instances in a `list`,
 it would then be unclear what each instance does.
 Instead we'll use `replacers`, a `dict` of `Replacer`
-indexed by an informative replacer name,
+indexed by replacer name,
 so `filter` can reduce `self.replacers.values()`.
 
 ```python
@@ -363,7 +399,7 @@ so `filter` can reduce `self.replacers.values()`.
 
 Here is the complete program: [redact.py][redact_py]
 
-## A `requests` example
+### A `requests` example
 
 The `requests` module provides a clean interface
 to send and receive data to and from web APIs.
