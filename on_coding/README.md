@@ -318,7 +318,6 @@ The problem with calling `re.sub` directly, as in
 ```python
     def filter(self, line):
         filtered = re.sub(pattern_string, repl, line)
-        ...
         return filtered
 ```
 
