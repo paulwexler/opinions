@@ -203,20 +203,7 @@ independently of its users.
 </sup>
 [*](#a2)
 
-## Examples
-
-My intent is to illustrate the concepts of coupling and cohesion.
-
-While the examples shown have gone through several iterations
-and do not reflect the growing pains that transpired
-to arrive in their present form,
-they demonstrate implementations constructed with
-highly cohesive and loosely coupled components.
-
-The actual code includes doc strings
-and scores 10.00/10 with pylint,
-but the following examples omit the doc strings
-because the code is annotated.
+## doc strings
 
 As a programming habit,
 I always write the doc strings first,
@@ -236,6 +223,31 @@ The doc string should be the "what".
 As for the "why",
 it derives from the context of the caller's "what",
 and it should be completely transparent to the component's "what".
+
+Remember that Python's `help` apparatus displays the doc strings.
+Start the interpreter, import your module, run `help`
+and make sure what you see explains how to use the module.
+```python
+    >>> import some_module
+    >>> help(some_module)
+    ...
+    >>> help(some_module.some_component)
+    ...
+```
+## Examples
+
+My intent is to illustrate the concepts of coupling and cohesion.
+
+While the examples shown have gone through several iterations
+and do not reflect the growing pains that transpired
+to arrive in their present form,
+they demonstrate implementations constructed with
+highly cohesive and loosely coupled components.
+
+The actual code includes doc strings throughout
+and scores 10.00/10 with pylint,
+but the following examples omit the doc strings
+because the code is annotated.
 
 ### A filter example.
 
