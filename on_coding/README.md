@@ -697,6 +697,114 @@ We need only change `validate` to check for a `tuple`, and add `validate_tuple`:
 ```
 Here is the complete program: [nested_validator.py][nested_validator_py]
 
+### A CLI example
+
+This example will contrast two designs.
+We can do so without actually writing the code.
+It is worth noting that the code that would actually "do the work"
+would be the same in either design.
+
+We need a CLI program to put our ducks in a row.
+We'll have to manage those ducks.
+Receive them, weigh them, feed them,
+and ultimately sort them,
+and other operations as well.
+
+First approach: A Parser and a Master
+
+We'll parse the command line arguments
+and dispatch to the selected command.
+
+We'll use an argparse.ArgumentParser to parse the arguments
+and obtain a `namespace`.
+It will ensure that `namespace.command` is a valid command
+and that all options and required arguments for that command
+are validated and present in the `namespace`.
+
+Since the various commands will share the same model of "duck"
+they will share some code, so they can be methods of say `class DuckMaster`
+with `__init__(self, namespace)`,
+and `__call__(self)`which calls the indicated command.
+The command will extract its arguments from the namespace
+and go to work.
+
+The mainline will instantiate the DuckParser
+and call it to get the `namespace`.
+Then it will instantiate the DuckMaster with the namespace
+and call it.
+
+There are problems with this approach.
+The DuckParser and the DuckMaster are tightly coupled.
+The DuckParser is not cohesive
+as it knows the options and arguments
+of all the supported commands.
+The DuckMaster is not cohesive as it contains
+all of the commands and all the common code.
+
+In order to add a new command
+we'd have to understand the entire design
+and add it to both DuckParser and DuckMaster.
+
+Second approach: A Command and a Master
+
+`class DuckCommand` will be the base class
+and each command (formerly a method of DuckMaster)
+will be a sub-class.
+
+`class DuckMaster` will be instantiated with
+the command line arguments `sys.argv[1:]`.
+It need only parse its first argument `args[0]`
+to ensure it is a valid command name,
+and then instantiate the class associated with the command name
+with the remaining arguments `args[1:]`.
+
+The mainline now needs only to instantiate and call `DuckMaster`.
+```python
+    DuckMaster(sys.argv[1:])()
+```
+
+`DuckMaster.__call__` will call the instantiated class.
+The call to the instantiated class
+could be made by `__init__`,
+but I prefer to separate the (static) "setup"
+and the (dynamic) "execution"
+with `__init__` and `__call__`.
+It makes testing easier,
+and it makes calling the same instance twice feasible.
+It is worth the time spent deciding
+what belongs in `__init__`,
+and what belongs in `__call__`.
+
+`DuckMaster.command` will be a class variable,
+a `dict` mapping a command name to a sub-class of DuckCommand.
+This `dict` could be hard-coded or, for less coupling,
+derived by introspecting
+the sub-classes of `DuckCommand`.
+
+`DuckCommand` will contain all the common code
+formerly in `DuckMaster`.
+as well as two methods each sub-class must overwrite:
+`get_namespace` and `__call__`.
+These methods will be tightly coupled
+as the `namespace` will contain exactly the attributes
+that `__call__` will act on.
+But they will be in the same sub-class,
+and they are the only methods each sub-class implements.
+
+`DuckCommand.__init__(self, args)` will call `self.get_namespace(args)`
+to get the namespace by parsing the args.
+`DuckCommand.__call__(self)` will implement the command.
+
+Now, to add another command,
+we'd only have to declare a new sub-class of `DuckCommand`
+and implement its `get_namespace` and `__call__` methods.
+
+The point worth noting here is that the code that "does the work"
+is essentially the same in both designs.
+This is why (after the prototyping experiments have revealed
+the light at the end of the tunnel)
+this code should be deferred as long as possible.
+
 [nested_validator_py]: ./nested_validator.py
 [redact_py]: ./redact.py
 [requestor_py]: ./requestor.py
