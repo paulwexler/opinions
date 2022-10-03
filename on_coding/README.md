@@ -724,7 +724,7 @@ are validated and present in the `namespace`.
 Since the various commands will share the same model of "duck"
 they will share some code, so they can be methods of say `class DuckMaster`
 with `__init__(self, namespace)`,
-and `__call__(self)`which calls the indicated command.
+and `__call__(self)` which calls the indicated command.
 The command will extract its arguments from the namespace
 and go to work.
 
