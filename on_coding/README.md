@@ -715,7 +715,7 @@ First approach: A Parser and a Master
 We'll parse the command line arguments
 and dispatch to the selected command.
 
-We'll use an argparse.ArgumentParser to parse the arguments
+We'll use an `argparse.ArgumentParser` to parse the arguments
 and obtain a `namespace`.
 It will ensure that `namespace.command` is a valid command
 and that all options and required arguments for that command
