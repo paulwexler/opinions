@@ -788,8 +788,9 @@ as well as two methods each sub-class must overwrite:
 These methods will be tightly coupled
 as the `namespace` will contain exactly the attributes
 that `__call__` will act on.
-But they will be in the same sub-class,
-and they are the only methods each sub-class implements.
+But now they will be in the same sub-class,
+they are the only methods each sub-class is required to implement,
+and this makes the sub-class cohesive.
 
 `DuckCommand.__init__(self, args)` will call `self.get_namespace(args)`
 to get the namespace by parsing the args.
