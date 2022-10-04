@@ -710,12 +710,12 @@ Receive them, weigh them, feed them,
 and ultimately sort them,
 and other operations as well.
 
-First approach: A Parser and a Master
+#### First approach: A Parser and a Master
 
 We'll parse the command line arguments
 and dispatch to the selected command.
 
-We'll use an `argparse.ArgumentParser` to parse the arguments
+We'll create `class DuckParser(argparse.ArgumentParser)` to parse the arguments
 and obtain a `namespace`.
 It will ensure that `namespace.command` is a valid command
 and that all options and required arguments for that command
@@ -728,9 +728,10 @@ and `__call__(self)` which calls the indicated command.
 The command will extract its arguments from the namespace
 and go to work.
 
-The mainline will instantiate the DuckParser
+The mainline will instantiate the `DuckParser`
+with `sys.argv[1:]`
 and call it to get the `namespace`.
-Then it will instantiate the DuckMaster with the namespace
+Then it will instantiate the `DuckMaster` with the `namespace`
 and call it.
 
 There are problems with this approach.
@@ -743,9 +744,9 @@ all of the commands and all the common code.
 
 In order to add a new command
 we'd have to understand the entire design
-and add it to both DuckParser and DuckMaster.
+and add the command to both DuckParser and DuckMaster.
 
-Second approach: A Command and a Master
+#### Second approach: A Command and a Master
 
 `class DuckCommand` will be the base class
 and each command (formerly a method of DuckMaster)
