@@ -726,7 +726,7 @@ they will share some code, so they can be methods of say `class DuckMaster`
 with `__init__(self, namespace)`,
 and `__call__(self)` which calls the indicated command.
 The command will extract its arguments from the namespace
-and go to work.
+now `self.namespace` and go to work.
 
 The mainline will instantiate the `DuckParser`
 with `sys.argv[1:]`
