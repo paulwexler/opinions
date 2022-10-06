@@ -53,7 +53,7 @@ class NestedValidator:
         depth-first traversal of obj,
         load self.error on first error and stop.
         '''
-        if not self.error and not template == object:
+        if not self.error:
             if isinstance(template, tuple):
                 self.validate_tuple(obj, template)
             else:

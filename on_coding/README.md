@@ -615,7 +615,7 @@ class NestedValidator:
         self.error = f'{nested_location}{error}'
 
     def validate(self, obj, template):
-        if not self.error and not template == object:
+        if not self.error:
             template_type = (
                     template if isinstance(template, type)
                     else type(template))
