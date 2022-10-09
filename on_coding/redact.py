@@ -45,7 +45,7 @@ class LineRedactor(LineFilter):
             replace_password=Replacer(
                     pattern_string=r'(?i)("password": )"(.*?)"',
                     repl=r'\1"REDACTED"'),
-            replace_id=Replacer(
+            replace_ip=Replacer(
                     # With an abundance of caution,
                     # the word delimiter "\b" which might normally
                     # delimit a regex for an IP address, is omitted here.
