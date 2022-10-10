@@ -236,12 +236,18 @@ and make sure what you see explains how to use the module.
 ```
 ## Examples
 
-My intent is to illustrate the concepts of coupling and cohesion.
+My intent is to illustrate the concepts of coupling and cohesion
+and the advantages of low coupling and high cohesion.
+The examples given are small and I suppose it could be argued
+that it does not matter how they were constructed
+as long as they work.
+But the advantages of managing coupling and cohesion
+increase with the size of the project.
 
-While the examples shown have gone through several iterations
+The examples shown have gone through several iterations
 and do not reflect the growing pains that transpired
 to arrive in their present form,
-they demonstrate implementations constructed with
+however they do demonstrate implementations constructed with
 highly cohesive and loosely coupled components.
 
 The actual code includes doc strings throughout
