@@ -652,7 +652,7 @@ class NestedValidator:
             if self.error:
                 break
 ```
-As it happens, some API's may return a variety of responses for the same request.
+As it happens, some API's may return a variety of responses with the same status_code.
 For example instead of a list of strings, a single string may be returned.
 
 We can take advantage of the fact that JSON has no tuple type
