@@ -226,7 +226,8 @@ and it should be completely transparent to the component's "what".
 
 Remember that Python's `help` apparatus displays the doc strings.
 Start the interpreter, import your module, run `help`
-and make sure what you see explains how to use the module.
+and make sure what you see explains what the module does
+and how to use it.
 ```python
     >>> import some_module
     >>> help(some_module)
