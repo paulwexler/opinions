@@ -815,7 +815,9 @@ Now, to add another command,
 we'd only have to declare a new sub-class of `DuckCommand`
 and implement its `get_namespace` and `__call__` methods.
 
-The point worth noting here is that the code that "does the work"
+The point worth noting here is that
+the difference is in the packaging.
+The code that "does the work"
 is essentially the same in both designs.
 This is why (after the prototyping experiments have revealed
 the light at the end of the tunnel)
