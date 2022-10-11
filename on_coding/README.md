@@ -744,12 +744,15 @@ Then it will instantiate the `DuckMaster` with the `namespace`
 and call it.
 
 There are problems with this approach.
-The DuckParser and the DuckMaster are tightly coupled.
-The DuckParser is not cohesive
-as it knows the options and arguments
-of all the supported commands.
-The DuckMaster is not cohesive as it contains
-all of the commands and all the common code.
+
+* One clue is that both the DuckParser and DuckMaster
+  have to dispatch on the indicated command.
+  This is a symptom of the tight coupling between them.
+* The DuckParser is not cohesive
+  as it knows the options and arguments
+  of all the supported commands.
+* The DuckMaster is not cohesive as it contains
+  all of the commands and all the common code.
 
 In order to add a new command
 we'd have to understand the entire design
