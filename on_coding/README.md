@@ -799,12 +799,14 @@ These methods will be tightly coupled
 as the `namespace` will contain exactly the attributes
 that `__call__` will act on.
 But now they will be in the same sub-class,
-they are the only methods each sub-class is required to implement,
-and this makes the sub-class cohesive.
+and they are the only methods each sub-class is required to implement.
+Now the sub-class is cohesive as
+it is responsible for implementing a single command
+in its entirety.
 
 `DuckCommand.__init__(self, args)` will call `self.get_namespace(args)`
 to get the namespace by parsing the args.
-`DuckCommand.__call__(self)` will implement the command.
+`DuckCommand.__call__(self)` will implement the actual duck command.
 
 Now, to add another command,
 we'd only have to declare a new sub-class of `DuckCommand`
