@@ -709,7 +709,9 @@ Here is the complete program: [nested_validator.py][nested_validator_py]
 This example will contrast two designs.
 We can do so without actually writing the code.
 It is worth noting that the code that would actually "do the work"
-would be the same in either design.
+would be essentially the same in either design,
+although the design with greater cohesion
+will likely require less actual code.
 
 We need a CLI program to put our ducks in a row.
 We'll have to manage those ducks.
