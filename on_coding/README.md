@@ -429,7 +429,7 @@ The `requests` module provides a clean interface
 to send and receive data to and from web APIs.
 
 You send requests by calling `requests.request(...)`
-with a list of keyword arguments.
+with keyword arguments.
 Either a `requests.exception.RequestException` is raised
 when the data exchange did not complete
 or a `requests.Response` object is returned.
