@@ -209,6 +209,11 @@ As a programming habit,
 I always write the doc strings first,
 then I implement what was described.
 
+`pylint` requires doc strings so I use them.
+And I always lint my code before testing it.
+So I try to write code
+so that it passes the linter the first time.
+
 How do you know what to put in a doc string?
 You can be sure you completely understand a piece of code
 when you know what it does, how it does it, and why it is needed.
@@ -220,9 +225,13 @@ In a language as expressive as Python, the "how" is the code itself.
 It is rare to need in-line comments in Python.
 In other words you seldom need a "how" for the "how".
 The doc string should be the "what".
+This almost always includes a description of the input and output.
 As for the "why",
 it derives from the context of the caller's "what",
 and it should be completely transparent to the component's "what".
+The "why" comes from your imagination
+and it constitutes your understanding
+of the component's relation to the implementation.
 
 Remember that Python's `help` apparatus displays the doc strings.
 Start the interpreter, import your module, run `help`
