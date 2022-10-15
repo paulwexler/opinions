@@ -244,6 +244,12 @@ that it does not matter how they were constructed
 as long as they work.
 But the advantages of managing coupling and cohesion
 increase with the size of the project.
+More importantly, after time,
+a collection of components will emerge
+which can "cover" the problem space, or nearly so.
+Then new problems can be solved
+by using the existing components
+and almost no new code need be developed.
 
 The examples shown have gone through several iterations
 and do not reflect the growing pains that transpired
