@@ -691,7 +691,7 @@ which have a "customers" key, or a dict with no "customers" key:
 We need only change `validate` to check for a `tuple`, and add `validate_tuple`:
 ```python
     def validate(self, obj, template):
-        if not self.error and not template == object:
+        if not self.error:
             if isinstance(template, tuple):
                 self.validate_tuple(obj, template)
             else:
