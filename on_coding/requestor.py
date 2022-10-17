@@ -1,5 +1,5 @@
 '''
-Validate a nested object
+Send request, validate response.
 '''
 
 import json
