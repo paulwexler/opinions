@@ -567,7 +567,9 @@ class Requestor:
         try:
             if response.status_code in response_template:
                 obj = json.loads(response.text) if response.text else None
-                error = self.validator(obj, response_template)
+                error = self.validator(
+                        obj,
+                        response_template[response.status_code])
             else:
                 error = f'Unexpected status code {response.status_code}'
         except json.decoder.JSONDecodeError as exc:
