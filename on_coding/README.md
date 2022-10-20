@@ -507,7 +507,9 @@ then the response template would be:
             403: object,
             404: [str]}
 ```
-If the response matches the template, the application can navigate it with impunity.
+If the response matches the template,
+the application can dispatch on the status code
+and navigate with impunity.
 If not, the error message should be sufficient for a developer
 to understand the root cause of the error.
 It should show:
