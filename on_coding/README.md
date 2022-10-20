@@ -530,7 +530,7 @@ Proceeding from the top down, the implementation falls neatly into two component
 2. A Validator which validates the `Response` object
    to ensure it matches the `response_template`.
 
-[requestor.py][requestor_py]
+`requestor.py`
 ```python
 import json
 
@@ -587,6 +587,8 @@ class Requestor:
         response = requests.request(**request_args)
         return response
 ```
+Here is the complete program: [requestor.py][requestor_py]
+
 `NestedValidator.__call__` must traverse the `template` recursively,
 comparing it to the `obj`,
 and validating as it goes.
@@ -721,6 +723,8 @@ We need only change `validate` to check for a `tuple`, and add `validate_tuple`:
 ```
 Here is the complete program: [nested_validator.py][nested_validator_py]
 
+Here is the test suite for both examples: [test_suite][test_suite]
+
 ### A CLI example
 
 This example will contrast two designs.
@@ -844,3 +848,4 @@ this code should be deferred as long as possible.
 [redact_py]: ./redact.py
 [requestor_py]: ./requestor.py
 [test_redact_py]: ./test/test_redact.py
+[test_suite]: ./test
