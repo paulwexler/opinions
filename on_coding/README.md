@@ -261,6 +261,7 @@ by using the existing components
 and almost no new code need be developed.
 
 The examples shown have gone through several iterations
+(steps 3 through 6)
 and do not reflect the growing pains that transpired
 to arrive in their present form,
 however they do demonstrate implementations constructed with
