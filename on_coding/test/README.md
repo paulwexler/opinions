@@ -1,10 +1,13 @@
 # Test Suite
 
+`cd` to the parent of this directory and run the tests as follows.
+
 * Run `pylint`.
   ```bash
   $ pylint *.py
   ```
   Ensure the score is 10.00/10
+
 * Run `pytest` using `coverage`.
   ```bash
   $ coverage erase
