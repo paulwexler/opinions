@@ -879,7 +879,7 @@ In those days a debugger was indispensible.
 In the first place it could display information on the terminal.
 In those days you could crash the operating system
 by running a program with a mis-spelled label.
-A program could run fine when compiled with the debugger,
+A program could run fine when linked with the debugger,
 and fail miserably without it;
 then it took some ingenuity
 to locate the cause of the memory leak.
