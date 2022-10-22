@@ -895,8 +895,7 @@ I found that well placed `printf` statements
 could eliminate the need for a debugger.
 
 With "Python",
-as long as I can reproduce the error
-I no longer use a debugger.
+I have never used a debugger.
 
 When the program crashes, a stack trace is output.
 Since my programs are constructed
