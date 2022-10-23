@@ -659,7 +659,7 @@ class NestedValidator:
                 self.validate_list(obj, template)
 
     def validate_dict(self, obj: dict, template: dict):
-        for key in template.keys():
+        for key in template:
             if key in obj:
                 self.nested_location.push(key)
                 self.validate(obj[key], template[key])

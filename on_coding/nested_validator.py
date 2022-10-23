@@ -71,7 +71,7 @@ class NestedValidator:
         '''
         validate_dict
         '''
-        for key in template.keys():
+        for key in template:
             if key in obj:
                 self.nested_location.push(key)
                 self.validate(obj[key], template[key])
