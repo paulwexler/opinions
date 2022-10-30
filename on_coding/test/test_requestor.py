@@ -17,7 +17,7 @@ class MockResponse:
 def send_request(req: Requestor, request_args=None, response_template=None):
     request_args = request_args or dict(url='test', method='GET')
     response_template = response_template or {200: dict}
-    return req.request(request_args, response_template)
+    return req.send(request_args, response_template)
     
 def test_requestor():
     req = requestor.Requestor()

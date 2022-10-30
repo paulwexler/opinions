@@ -527,10 +527,10 @@ or provide proof to the web API that something is amiss.
 
 Proceeding from the top down, the implementation falls neatly into two components.
 1. A Requestor
-   * Its `request` method handles any errors from sending the request. \
+   * Its `send` method handles any errors from sending the request. \
      It returns (the JSON decoded response object, status code) \
      or it raises `RuntimeError`.
-   * Its `send` method isolates and encapsulates the use of `requests`.
+   * Its `request` method isolates and encapsulates the use of `requests`.
    * Its `error` method returns a formatted error string.
    * It need not know what a valid response is, as it delegates that to the Validator.
 2. A Validator which validates the `Response` object
@@ -568,8 +568,13 @@ class Requestor:
                 f'{json.dumps(response_template, indent=4)}\n'
                 f'{prettytext}')
 
-    def request(self, request_args: dict, response_template: dict):
-        response = self.send(request_args)
+    @staticmethod
+    def request(request_args: dict) -> requests.Response:
+        response = requests.request(**request_args)
+        return response
+
+    def send(self, request_args: dict, response_template: dict):
+        response = self.request(request_args)
         try:
             if response.status_code in response_template:
                 obj = json.loads(response.text) if response.text else None
@@ -587,11 +592,6 @@ class Requestor:
                     request_args,
                     response_template))
         return obj, response.status_code
-
-    @staticmethod
-    def send(request_args: dict) -> requests.Response:
-        response = requests.request(**request_args)
-        return response
 ```
 Here is the complete program: [requestor.py][requestor_py]
 

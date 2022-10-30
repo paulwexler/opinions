@@ -39,14 +39,23 @@ class Requestor:
                 #f'{json.dumps(response_template, indent=4)}\n'
                 f'{prettytext}')
 
-    def request(self, request_args: dict, response_template: dict):
+    @staticmethod
+    def request(request_args: dict) -> requests.Response:
+        '''
+        send `request_args` using requests.request
+        return response (requests.Response instance)
+        '''
+        response = requests.request(**request_args)
+        return response
+
+    def send(self, request_args: dict, response_template: dict):
         '''
         Send request, validate response
         return obj, status_code or raise RuntimeError
         obj - object decoded from JSON response.
         status_code - HTTP status code
         '''
-        response = self.send(request_args)
+        response = self.request(request_args)
         try:
             if response.status_code in response_template:
                 obj = json.loads(response.text) if response.text else None
@@ -64,12 +73,3 @@ class Requestor:
                     request_args,
                     response_template))
         return obj, response.status_code
-
-    @staticmethod
-    def send(request_args: dict) -> requests.Response:
-        '''
-        send `request_args` using requests.request
-        return response (requests.Response instance)
-        '''
-        response = requests.request(**request_args)
-        return response
