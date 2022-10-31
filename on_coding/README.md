@@ -688,11 +688,6 @@ a single string may be returned.
 We can take advantage of the fact that JSON has no tuple type
 and use Python's tuple as metadata to request a choice of templates.
 
-Of course if the application's `response_template` allows multiple templates
-for the same `status_code`,
-then the application must determine what object was actually returned
-before it can navigate that object with impunity.
-
 Here is an example of a template which accepts a dict or a list of dicts
 which have a "customers" key, or a dict with no "customers" key:
 ```python
