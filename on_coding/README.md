@@ -883,7 +883,7 @@ this code should be deferred as long as possible.
 
 I started writing programs in "assembler".
 In those days a debugger was indispensible.
-In the first place it could display information on the terminal.
+In the first place it could display information on the teletype.
 In those days you could crash the operating system
 by running a program with a mis-spelled label.
 A program could run fine when linked with the debugger,
