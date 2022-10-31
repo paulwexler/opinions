@@ -711,18 +711,21 @@ and the code which interprets `obj`, the response object:
             else [])
 ```
 In theory the coupling could be eliminated
-by attaching a transformation function
-to each element of the tuple,
-and building a copy of `obj`
-while traversing
-by applying the transformation functions as necessary.
-At the end of the traversal the normalized version of `obj`
-would be in perhaps `self.normalized` (when `self.error == ''`).
-But in practice, the `response_template` will not be deeply nested,
+by deriving the transformation functions
+from the response template,
+applying them as necessary,
+and returning a "normalized" response object
+in which any given field has a single type.
+
+In practice,
+the response template will not be deeply nested,
 nor contain many tuples,
-so the implementation could invoke the transformations
-on any special fields with in-line code as necessary,
-and the coupling though present, would be manageable.
+so the coupling though present,
+should be manageable.
+
+In any case, the appropriate transformations
+should be applied to "normalize" the response object
+before the application continues.
 
 We need only change `validate` to check for a `tuple`, and add `validate_tuple`:
 ```python
