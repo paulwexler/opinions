@@ -54,18 +54,15 @@ class NestedValidator:
         load self.error on first error and stop.
         '''
         if not self.error:
-            if isinstance(template, tuple):
-                self.validate_tuple(obj, template)
-            else:
-                template_type = (
-                        template if isinstance(template, type)
-                        else type(template))
-                if not isinstance(obj, template_type):
-                    self.load_error(f'Not a {template_type}: {obj}')
-                elif isinstance(template, dict):
-                    self.validate_dict(obj, template)
-                elif isinstance(template, list):
-                    self.validate_list(obj, template)
+            template_type = (
+                    template if isinstance(template, type)
+                    else type(template))
+            if not isinstance(obj, template_type):
+                self.load_error(f'Not a {template_type}: {obj}')
+            elif isinstance(template, dict):
+                self.validate_dict(obj, template)
+            elif isinstance(template, list):
+                self.validate_list(obj, template)
 
     def validate_dict(self, obj: dict, template: dict):
         '''
@@ -92,19 +89,3 @@ class NestedValidator:
             self.nested_location.pop()
             if self.error:
                 break
-
-    def validate_tuple(self, obj, template_tuple: tuple):
-        '''
-        validate_tuple
-        error only if all templates in the tuple fail.
-        '''
-        errors = []
-        for template in template_tuple:
-            self.error = ''
-            self.validate(obj, template)
-            if self.error:
-                errors.append(self.error)
-            else:
-                break
-        else:
-            self.load_error('\n'.join(errors))

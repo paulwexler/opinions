@@ -16,11 +16,5 @@ def test_nested_validator():
     assert "Not a <class 'dict'>: []" == validator([], {})
     assert '' == validator([1, 2], [int])
     assert "1: Not a <class 'int'>: a" == validator([1, 'a'], [int])
-    assert '' == validator(dict(a=1), (int, str, {'a': object}))
-    result = validator(
-            dict(a=1),
-            (int, str, {'a': str}))
-    assert result.endswith("a: Not a <class 'str'>: 1")
-    assert "Not a <class 'str'>: 1\nNot a <class 'list'>: 1" == validator(
-            1,
-            (str, [int]))
+    assert '' == validator(dict(a=1), {'a': object})
+    assert 'a: Missing key "x"' == validator({'a': {}}, dict(a=dict(x=1)))

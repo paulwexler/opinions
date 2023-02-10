@@ -10,7 +10,8 @@ This write up is my effort
 to apply Polya’s method to application programming.
 It is also a distillation of my 45 years of experience
 writing and debugging applications.
-My intention is to provide a generalist, step-by-step approach
+My intention is to provide a generalist, step-by-step,
+yet recursive approach
 for implementing resilient solutions to problems.
 I have provided examples in Python to illustrate key concepts.
 
@@ -405,7 +406,7 @@ Additionally, it isolates and encapsulates the use of `re`.
 
 Functionally we are done, but there is an unintended "coupling"
 that can be easily reduced
-by factoring executable code into data.
+by the technique of factoring executable code into data.
 
 Note that `LineRedactor.filter` "knows" a lot about what the program does.
 It "knows" `replace_ip`, `replace_password`,
@@ -524,6 +525,17 @@ It should show:
 
 This information will enable the developer to either fix the program
 or provide proof to the web API that something is amiss.
+
+The application code which interprets the status code
+is necessarily tightly coupled to the response template.
+It must know what the acceptable status codes are
+and what to do in each case.
+In practice, the application's logic
+follows common sense,
+and this coupling is entirely manageable.
+For example, a GET request may accept a 200
+and return the requested object,
+or accept a 404 when the object is not found.
 
 Proceeding from the top down, the implementation falls neatly into two components.
 1. A Requestor
@@ -677,79 +689,6 @@ class NestedValidator:
             self.nested_location.pop()
             if self.error:
                 break
-```
-This works for many sites,
-but as it happens,
-some XML inspired API's may return a variety of responses
-with the same status_code.
-For example instead of a list of strings,
-a single string may be returned.
-
-We can take advantage of the fact that JSON has no tuple type
-and use Python's tuple as metadata to request a choice of templates.
-
-Here is an example of a template which accepts a dict or a list of dicts
-which have a "customers" key, or a dict with no "customers" key:
-```python
-    response_template = {
-            200: (
-                    [{'customers': object}],
-                    {'customers': object},
-                    dict)}
-```
-This introduces coupling between the `response_template`
-and the code which interprets `obj`, the response object:
-```python
-    customers = (
-            obj if isinstance(obj, list )
-            else [obj] if 'customers' in obj
-            else [])
-```
-In theory the coupling could be eliminated
-by deriving the transformation functions
-from the response template,
-applying them as necessary,
-and returning a "normalized" response object
-in which any given field has a single type.
-
-In practice,
-the response template will not be deeply nested,
-nor contain many tuples,
-so the coupling though present,
-should be manageable.
-
-In any case, the appropriate transformations
-should be applied to "normalize" the response object
-before the application continues.
-
-We need only change `validate` to check for a `tuple`, and add `validate_tuple`:
-```python
-    def validate(self, obj, template):
-        if not self.error:
-            if isinstance(template, tuple):
-                self.validate_tuple(obj, template)
-            else:
-                template_type = (
-                        template if isinstance(template, type)
-                        else type(template))
-                if not isinstance(obj, template_type):
-                    self.load_error(f'Not a {template_type}: {obj}')
-                elif isinstance(template, dict):
-                    self.validate_dict(obj, template)
-                elif isinstance(template, list):
-                    self.validate_list(obj, template)
-
-    def validate_tuple(self, obj, template_tuple: tuple):
-        errors = []
-        for template in template_tuple:
-            self.error = ''
-            self.validate(obj, template)
-            if self.error:
-                errors.append(self.error)
-            else:
-                break
-        else:
-            self.load_error('\n'.join(errors))
 ```
 Here is the complete program: [nested_validator.py][nested_validator_py]
 
