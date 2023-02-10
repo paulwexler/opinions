@@ -248,6 +248,59 @@ and how to use it.
     >>> help(some_module.some_component)
     ...
 ```
+## Debugging
+
+I started writing programs in "assembler".
+In those days a debugger was indispensible.
+In the first place it could display information on the teletype.
+In those days you could crash the operating system
+by running a program with a mis-spelled label.
+A program could run fine when linked with the debugger,
+and fail miserably without it;
+then it took some ingenuity
+to locate the cause of the memory leak.
+
+When "C" arrived, a lot of the memory management was automated,
+but the program still had to manage memory
+and could still mysteriously crash.
+Debuggers were useful because
+you could effectively add dynamic print statements
+without recompiling.
+But for the most part,
+I found that well placed `printf` statements
+could eliminate the need for a debugger.
+
+With "Python",
+I have never used a debugger.
+
+When the program crashes, a stack trace is output.
+Since my programs are constructed
+out of cohesive components with low coupling,
+it is easy to discover the root cause of the crash.
+The trace lists the error, method, and line number which crashed.
+When I look there,
+if there is still any mystery,
+I can put an output statement at the start of the method
+which shows the input arguments.
+If the input is correct, the error is in the method;
+if not, the trace shows the line number of caller,
+so I can continue this search technique from there.
+
+The point is that the stack trace directs the search,
+and since each method is cohesive and loosely coupled,
+it can be understood in isolation.
+You'll know if its input is valid or not,
+and you'll know what it is supposed to do.
+So the search for the cause of the error can proceed
+without having to understand the entire program.
+
+If the program was not component based,
+the stack trace might point you to a line number
+in a `while` in a `for` in a `for` in a `while`,
+and then you might wish you had a debugger
+so you could continue from breakpoint to breakpoint
+hunting for the bug with the wrong end of the telescope.
+
 ## Examples
 
 My intent is to illustrate the concepts of coupling and cohesion
@@ -751,8 +804,8 @@ and add the command to both DuckParser and DuckMaster.
 #### Second approach: A Command and a Master
 
 `class DuckCommand` will be the base class
-and each command (formerly a method of DuckMaster)
-will be a sub-class.
+and each command (a method of DuckMaster in the first approach),
+will now be a sub-class.
 
 `class DuckMaster` will be instantiated with
 the command line arguments `sys.argv[1:]`.
@@ -812,59 +865,6 @@ is essentially the same in both designs.
 This is why (after the prototyping experiments have revealed
 the light at the end of the tunnel)
 this code should be deferred as long as possible.
-
-## Debugging
-
-I started writing programs in "assembler".
-In those days a debugger was indispensible.
-In the first place it could display information on the teletype.
-In those days you could crash the operating system
-by running a program with a mis-spelled label.
-A program could run fine when linked with the debugger,
-and fail miserably without it;
-then it took some ingenuity
-to locate the cause of the memory leak.
-
-When "C" arrived, a lot of the memory management was automated,
-but the program still had to manage memory
-and could still mysteriously crash.
-Debuggers were useful because
-you could effectively add dynamic print statements
-without recompiling.
-But for the most part,
-I found that well placed `printf` statements
-could eliminate the need for a debugger.
-
-With "Python",
-I have never used a debugger.
-
-When the program crashes, a stack trace is output.
-Since my programs are constructed
-out of cohesive components with low coupling,
-it is easy to discover the root cause of the crash.
-The trace lists the error, method, and line number which crashed.
-When I look there,
-if there is still any mystery,
-I can put an output statement at the start of the method
-which shows the input arguments.
-If the input is correct, the error is in the method;
-if not, the trace shows the line number of caller,
-so I can continue this search technique from there.
-
-The point is that the stack trace directs the search,
-and since each method is cohesive and loosely coupled,
-it can be understood in isolation.
-You'll know if its input is valid or not,
-and you'll know what it is supposed to do.
-So the search for the cause of the error can proceed
-without having to understand the entire program.
-
-If the program was not component based,
-the stack trace might point you to a line number
-in a `while` in a `for` in a `for` in a `while`,
-and then you might wish you had a debugger
-so you could continue from breakpoint to breakpoint
-hunting for the bug with the wrong end of the telescope.
 
 [nested_validator_py]: ./nested_validator.py
 [redact_py]: ./redact.py
