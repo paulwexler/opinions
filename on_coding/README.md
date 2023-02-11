@@ -107,7 +107,8 @@ and strive always to reduce their coupling.
   Partition the task at hand into independent sub-tasks.
   This is a "breadth-first" recursive technique
   applicable at each stage of the partition.
-  Each sub-task requires a plan as in 3.
+  Each sub-task requires a statement as in 2.,
+  a plan as in 3.,
   and a solution as in 4.
   The goal is a collection of loosely coupled
   and highly cohesive components.
@@ -318,7 +319,7 @@ by using the existing components
 and almost no new code need be developed.
 
 The examples shown have gone through several iterations
-(steps 3 through 6)
+(steps 2 through 6)
 and do not reflect the growing pains that transpired
 to arrive in their present form,
 however they do demonstrate implementations constructed with

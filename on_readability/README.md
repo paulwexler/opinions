@@ -59,8 +59,13 @@ It is an extension of what makes indentation so powerful.
    break it up into one idea per line.
    ```python
    >>> value = do_something_to(
-   ...         this_value if condition
-   ...         else that_value)
+   ...         some_value if some_condition(
+   ...                 of,
+   ...                 some,
+   ...                 args)
+   ...         else some_computation(
+   ...                 of_some,
+   ...                 other_args))
    ```
 4. Limit methods to a single screen.
    Break it up into smaller methods if it does not fit.
