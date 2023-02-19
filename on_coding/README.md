@@ -478,13 +478,13 @@ but `filter` does not need to.
 
 While we could put the `Replacer` instances in a `list`,
 it would then be unclear what each instance does.
-Instead we'll use `replacers`, a `dict` of `Replacer`
+Instead we'll use `replacer`, a `dict` of `Replacer`
 indexed by replacer name,
-so `filter` can reduce `self.replacers.values()`.
+so `filter` can reduce `self.replacer.values()`.
 
 ```python
         def filter(self, line):
-            for replacer in self.replacers.values():
+            for replacer in self.replacer.values():
                 line = replacer(line)
             return line
 ```
