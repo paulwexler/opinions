@@ -334,7 +334,7 @@ because the code is annotated.
 
 As network admin, I need to send log files to a 3rd party auditor.
 These files are text files with one log entry per line.
-They contain IP addresses as well as passwords
+They include IP addresses as well as passwords
 and these must be redacted for security.
 The files are huge and must be processed in a pipeline.
 A program is required which reads the logs from stdin,
