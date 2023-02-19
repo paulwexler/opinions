@@ -41,7 +41,7 @@ class LineRedactor(LineFilter):
     This filter redacts each line
     Replace the password first because it may contain an IP.
     '''
-    replacers = dict(
+    replacer = dict(
             replace_password=Replacer(
                     pattern_string=r'(?i)("password": )"(.*?)"',
                     repl=r'\1"REDACTED"'),
@@ -64,9 +64,9 @@ class LineRedactor(LineFilter):
     def filter(self, line):
         '''
         return filtered `line`
-        Reduce all the replacers starting with line.
+        Reduce `line` by all the replacers.
         '''
-        for replacer in self.replacers.values():
+        for replacer in self.replacer.values():
             line = replacer(line)
         return line
 
