@@ -483,6 +483,25 @@ indexed by replacer name,
 so `filter` can reduce `self.replacer.values()`.
 
 ```python
+        replacer = dict(
+                replace_password=Replacer(
+                        pattern_string=r'(?i)("password": )"(.*?)"',
+                        repl=r'\1"REDACTED"'),
+                replace_ip=Replacer(
+                        # With an abundance of caution,
+                        # the word delimiter "\b" which might normally
+                        # delimit a regex for an IP address, is omitted here.
+                        pattern_string=(
+                                r'('
+                                r'(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)'
+                                r'('
+                                r'\.'
+                                r'(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)'
+                                r'){3}'
+                                r')'),
+                        repl=lambda match: ''.join(
+                                '.' if c == '.' else 'X'
+
         def filter(self, line):
             for replacer in self.replacer.values():
                 line = replacer(line)
