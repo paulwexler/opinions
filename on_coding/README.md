@@ -622,7 +622,9 @@ Proceeding from the top down, the implementation falls neatly into two component
      or it raises `RuntimeError`.
    * Its `request` method isolates and encapsulates the use of `requests`.
    * Its `error` method returns a formatted error string.
-   * It need not know what a valid response is, as it delegates that to the Validator.
+   * Besides decoding the JSON response
+     it need not know what a valid response is,
+     as it delegates that to the Validator.
 2. A Validator which validates the `Response` object
    to ensure it matches the `response_template`.
 
