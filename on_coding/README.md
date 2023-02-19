@@ -603,7 +603,12 @@ The application code which interprets the status code
 is necessarily tightly coupled to the response template.
 It must know what the acceptable status codes are
 and what to do in each case.
-In practice, the application's logic
+This coupling could be removed
+(using the technique of factoring executable code into data)
+by modifying the response template
+to include a handler (i.e. a method to call) for each status code.
+
+However, in practice, the application's logic
 follows common sense,
 and this coupling is entirely manageable.
 For example, a GET request may accept a 200
