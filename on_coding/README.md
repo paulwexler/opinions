@@ -480,7 +480,7 @@ While we could put the `Replacer` instances in a `list`,
 it would then be unclear what each instance does.
 Instead we'll use `replacer`, a `dict` of `Replacer`
 indexed by replacer name,
-so `filter` can reduce `self.replacer.values()`.
+so `filter` can reduce `line` by `self.replacer.values()`.
 
 ```python
         replacer = dict(
