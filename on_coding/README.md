@@ -606,7 +606,7 @@ and what to do in each case.
 This coupling could be removed
 (using the technique of factoring executable code into data)
 by modifying the response template
-to include a handler (i.e. a method to call) for each status code.
+to associate a handler (i.e. a method to call) with each status code.
 
 However, in practice, the application's logic
 follows common sense,
