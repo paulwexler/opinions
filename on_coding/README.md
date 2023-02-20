@@ -836,7 +836,7 @@ will now be a sub-class.
 
 `class DuckMaster` will be instantiated with
 the command line arguments `sys.argv[1:]`.
-`DuckMaster.__init__ need only parse its first argument `args[0]`
+`DuckMaster.__init__` need only parse its first argument `args[0]`
 to ensure it is a valid command name,
 and then instantiate the class associated with the command name
 with the remaining arguments `args[1:]`.
