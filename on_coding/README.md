@@ -836,20 +836,21 @@ will now be a sub-class.
 
 `class DuckMaster` will be instantiated with
 the command line arguments `sys.argv[1:]`.
-It need only parse its first argument `args[0]`
+`DuckMaster.__init__ need only parse its first argument `args[0]`
 to ensure it is a valid command name,
 and then instantiate the class associated with the command name
 with the remaining arguments `args[1:]`.
 
-The mainline now needs only to instantiate and call `DuckMaster`.
-```python
-    DuckMaster(sys.argv[1:])()
-```
+`DuckMaster.command` will be a class variable,
+a `dict` mapping a command name to a sub-class of DuckCommand.
+This `dict` could be hard-coded or, for less coupling,
+derived by introspecting
+the sub-classes of `DuckCommand`.
 
 `DuckMaster.__call__` will call the instantiated class.
-The call to the instantiated class
+While the call to the instantiated class
 could be made by `__init__`,
-but I prefer to separate the (static) "setup"
+I prefer to separate the (static) "setup"
 and the (dynamic) "execution"
 with `__init__` and `__call__`.
 It makes testing easier,
@@ -858,14 +859,13 @@ It is worth the time spent deciding
 what belongs in `__init__`,
 and what belongs in `__call__`.
 
-`DuckMaster.command` will be a class variable,
-a `dict` mapping a command name to a sub-class of DuckCommand.
-This `dict` could be hard-coded or, for less coupling,
-derived by introspecting
-the sub-classes of `DuckCommand`.
+The mainline now needs only to instantiate and call `DuckMaster`.
+```python
+    DuckMaster(sys.argv[1:])()
+```
 
 `DuckCommand` will contain all the common code
-formerly in `DuckMaster`.
+formerly in `DuckMaster`,
 as well as two methods each sub-class must overwrite:
 `get_namespace` and `__call__`.
 These methods will be tightly coupled
@@ -888,7 +888,7 @@ and implement its `get_namespace` and `__call__` methods.
 The point worth noting here is that
 the difference is in the packaging.
 The code that "does the work"
-is essentially the same in both designs.
+will be essentially the same in both designs.
 This is why (after the prototyping experiments have revealed
 the light at the end of the tunnel)
 this code should be deferred as long as possible.
