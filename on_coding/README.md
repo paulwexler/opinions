@@ -842,7 +842,7 @@ and then instantiate the class associated with the command name
 with the remaining arguments `args[1:]`.
 
 `DuckMaster.command` will be a class variable,
-a `dict` mapping a command name to a sub-class of DuckCommand.
+a `dict` mapping a command name to a sub-class of `DuckCommand`.
 This `dict` could be hard-coded or, for less coupling,
 derived by introspecting
 the sub-classes of `DuckCommand`.
