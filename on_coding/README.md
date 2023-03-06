@@ -501,6 +501,7 @@ so `filter` can reduce `line` by `self.replacer.values()`.
                                 r')'),
                         repl=lambda match: ''.join(
                                 '.' if c == '.' else 'X'
+                                    for c in match.group(1))))
 
         def filter(self, line):
             for replacer in self.replacer.values():
