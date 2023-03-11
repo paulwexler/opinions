@@ -451,7 +451,7 @@ Additionally, it isolates and encapsulates the use of `re`.
                         '.' if c == '.' else 'X'
                                 for c in match.group(1)))
         replace_password = Replacer(
-                pattern_string=r'(?i)("password": )"(.*?)"',
+                pattern_string=r'(?i)("password": ?)"(.*?)"',
                 repl=r'\1"REDACTED"')
 
         def filter(self, line):

@@ -43,7 +43,7 @@ class LineRedactor(LineFilter):
     '''
     replacer = dict(
             replace_password=Replacer(
-                    pattern_string=r'(?i)("password": )"(.*?)"',
+                    pattern_string=r'(?i)("password": ?)"(.*?)"',
                     repl=r'\1"REDACTED"'),
             replace_ip=Replacer(
                     # With an abundance of caution,
