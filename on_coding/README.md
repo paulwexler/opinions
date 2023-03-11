@@ -225,7 +225,7 @@ when you know what it does, how it does it, and why it is needed.
 
 What, how, why.
 
-Of these "why" is the most important, and "how" the least.
+Of these, "why" is the most important, and "how" the least.
 In a language as expressive as Python, the "how" is the code itself.
 It is rare to need in-line comments in Python.
 In other words you seldom need a "how" for the "how".
@@ -252,7 +252,7 @@ and how to use it.
 ## Debugging
 
 I started writing programs in "assembler".
-In those days a debugger was indispensible.
+In those days a debugger was indispensable.
 In the first place it could display information on the teletype.
 In those days you could crash the operating system
 by running a program with a mis-spelled label.
@@ -278,13 +278,13 @@ When the program crashes, a stack trace is output.
 Since my programs are constructed
 out of cohesive components with low coupling,
 it is easy to discover the root cause of the crash.
-The trace lists the error, method, and line number which crashed.
+The trace lists the error, file, method, and line number which crashed.
 When I look there,
 if there is still any mystery,
 I can put an output statement at the start of the method
 which shows the input arguments.
 If the input is correct, the error is in the method;
-if not, the trace shows the line number of caller,
+if not, the trace shows the line number of the caller,
 so I can continue this search technique from there.
 
 The point is that the stack trace directs the search,
@@ -316,7 +316,7 @@ a collection of components will emerge
 which can "cover" the problem space, or nearly so.
 Then new problems can be solved
 by using the existing components
-and almost no new code need be developed.
+and almost no new code needs to be developed.
 
 The examples shown have gone through several iterations
 (steps 2 through 6)
@@ -525,7 +525,7 @@ or a `requests.Response` object is returned.
 A `RequestException` can be raised for a variety of reasons.
 The url could be wrong, the request might be blocked by a firewall,
 the site could be down, the request could have timed out, or some other error.
-Some applications might catch `RequestException` or specific sub-classes of it
+Some applications might catch `RequestException` or specific subclasses of it
 and attempt to handle these errors,
 however for many applications,
 there is no need to handle these exceptions,
@@ -833,7 +833,7 @@ and add the command to both DuckParser and DuckMaster.
 
 `class DuckCommand` will be the base class
 and each command (a method of DuckMaster in the first approach),
-will now be a sub-class.
+will now be a subclass.
 
 `class DuckMaster` will be instantiated with
 the command line arguments `sys.argv[1:]`.
@@ -843,10 +843,10 @@ and then instantiate the class associated with the command name
 with the remaining arguments `args[1:]`.
 
 `DuckMaster.command` will be a class variable,
-a `dict` mapping a command name to a sub-class of `DuckCommand`.
+a `dict` mapping a command name to a subclass of `DuckCommand`.
 This `dict` could be hard-coded or, for less coupling,
 derived by introspecting
-the sub-classes of `DuckCommand`.
+the subclasses of `DuckCommand`.
 
 `DuckMaster.__call__` will call the instantiated class.
 While the call to the instantiated class
@@ -867,14 +867,14 @@ The mainline now needs only to instantiate and call `DuckMaster`.
 
 `DuckCommand` will contain all the common code
 formerly in `DuckMaster`,
-as well as two methods each sub-class must overwrite:
+as well as two methods each subclass must overwrite:
 `get_namespace` and `__call__`.
 These methods will be tightly coupled
 as the `namespace` will contain exactly the attributes
 that `__call__` will act on.
-But now they will be in the same sub-class,
-and they are the only methods each sub-class is required to implement.
-Now the sub-class is cohesive as
+But now they will be in the same subclass,
+and they are the only methods each subclass is required to implement.
+Now the subclass is cohesive as
 it is responsible for implementing a single command
 in its entirety.
 
@@ -883,7 +883,7 @@ to get the namespace by parsing the args.
 `DuckCommand.__call__(self)` will implement the actual duck command.
 
 Now, to add another command,
-we'd only have to declare a new sub-class of `DuckCommand`
+we'd only have to declare a new subclass of `DuckCommand`
 and implement its `get_namespace` and `__call__` methods.
 
 The point worth noting here is that
