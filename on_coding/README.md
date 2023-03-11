@@ -691,12 +691,12 @@ Here is the complete program: [requestor.py][requestor_py]
 `NestedValidator.__call__` must traverse the `template` recursively,
 comparing it to the `obj`,
 and validating as it goes.
-* If the template is object, the obj is valid.
-* If the template is a type, the obj must be an instance of that type,
-  otherwise the type of the obj must equal the type of the template.
-* If the template is a dict, every key must be in the obj
+* If the `template` is a `type`, the `obj` must be an instance of that `type`,
+  otherwise the `type` of the `obj` must equal the `type` of the `template`.
+  This implies that if the `template` is `object`, then the `obj` is valid.
+* If the `template` is a `dict`, every key must be in the `obj`
   and their values must match.
-* If the template is a list, every element in obj must match template[0].
+* If the `template` is a `list`, every element in `obj` must match `template[0]`.
 
 It returns the first error it finds
 or it returns an empty string if it completes the traversal.
@@ -708,7 +708,7 @@ The error should be self-explanatory in the context in which it appears.
 
 A stack of locations is needed to keep track of the nested location,
 and a list of locations is needed to print them as a dot-delimited string.
-So a list will suffice for the implementation.
+So a `list` will suffice for the implementation.
 
 `nested_validator.py`
 ```python
