@@ -13,7 +13,7 @@ and reading music to realize the composer's intent.
 While music notation has had centuries to develop,
 coding has had only decades.
 
-A good manuscript maintains a consistant redundency
+A good manuscript maintains a consistent redundancy
 between the formal rules
 and the informal style.
 For example,

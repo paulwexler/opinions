@@ -14,7 +14,7 @@ because a `break` was never executed.
 
 Ordinarily, the code immediately following the `for` block
 has no way of deciding whether or not a `break` was executed;
-while the code immediately preceeding the `break` knows that
+while the code immediately preceding the `break` knows that
 the break condition is now true
 and is about to break out of the loop.
 Therefore the only possible use for the `else` clause
