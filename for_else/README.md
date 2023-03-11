@@ -22,8 +22,8 @@ in a `for else` block
 is to handle the case of when the `for` loop has run to completion.
 
 In other words, the implied `if` is **"if a `break` was executed"**.
-And of course that only happens when the break condition was true.
-So `else` only runs when the break condition was never true:
+And of course that only happens when the break condition was found to be true.
+So `else` only runs when the break condition was never found to be true:
 ```python
     for x in my_iterable:
         if the_break_condition(x) is True:
