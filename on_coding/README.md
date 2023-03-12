@@ -291,7 +291,8 @@ The point is that the stack trace directs the search,
 and since each method is cohesive and loosely coupled,
 it can be understood in isolation.
 You'll know if its input is valid or not,
-and you'll know what it is supposed to do.
+and you'll know what it is supposed to do
+because that information is in the doc string.
 So the search for the cause of the error can proceed
 without having to understand the entire program.
 
