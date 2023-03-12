@@ -276,7 +276,7 @@ I have never used a debugger.
 
 When the program crashes, a stack trace is output.
 Since my programs are constructed
-out of cohesive components with low coupling,
+out of cohesive components with loose coupling,
 it is easy to discover the root cause of the crash.
 The trace lists the error, file, method, and line number which crashed.
 When I look there,
@@ -306,7 +306,7 @@ hunting for the bug with the wrong end of the telescope.
 ## Examples
 
 My intent is to illustrate the concepts of coupling and cohesion
-and the advantages of low coupling and high cohesion.
+and the advantages of loose coupling and high cohesion.
 The examples given are small and I suppose it could be argued
 that it does not matter how they were constructed
 as long as they work.
