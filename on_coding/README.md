@@ -325,6 +325,7 @@ If it is a failure, the error message should include at a minimum
 1. The caller's view of what was attempted.
 2. The resource that was called (including all arguments if any).
 3. What the resource returned.
+
 Put another way,
 the message should include whatever you would display
 if you were in a debugger at a breakpoint where the error occurred.
