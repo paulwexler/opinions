@@ -303,6 +303,41 @@ and then you might wish you had a debugger
 so you could continue from breakpoint to breakpoint
 hunting for the bug with the wrong end of the telescope.
 
+## Error Handling
+
+All too often application development proceeds by implementing the "happy" path first
+with no regard to error handling.
+And when the error handling is finally added, no thought is given to the content of the message
+besides indicating that an error happened.
+These are errors which probably never happened during development,
+or perhaps only appeared during the initial prototyping of the resource,
+so an "it doesn't matter, ain't never gonna happen" attitude often prevails.
+
+But in time, things will go wrong.
+A configuration file gets corrupted, a disk fills up, permissions change, ...
+You want the application to not simply be a victim,
+but to actually aid in discovering the path to recovery.
+
+If you want the application to be robust,
+then whenever the application calls an external resource
+the return status should be checked.
+If it is a failure, the error message should include at a minimum
+1. The caller's view of what was attempted.
+2. The resource that was called (including all arguments if any).
+3. What the resource returned.
+Put another way,
+the message should include whatever you would display
+if you were in a debugger at a breakpoint where the error occurred.
+
+This information will serve several purposes.
+First, it will enable the developer to rapidly fix the code
+when the error is due to an improper call to the resource.
+Second, it will help operators diagnose the root of the problem
+should this error suddenly appear in production.
+Finally, if the error is actually in the resource,
+then the message will serve as a starting point
+for developers of the resource to begin debugging it.
+
 ## Examples
 
 My intent is to illustrate the concepts of coupling and cohesion
