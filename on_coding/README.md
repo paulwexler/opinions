@@ -313,7 +313,19 @@ These are errors which probably never happened during development,
 or perhaps only appeared during the initial prototyping of the resource,
 so an "it doesn't matter, ain't never gonna happen" attitude often prevails.
 
-But in time, things will go wrong.
+Not handling errors is almost the essence of prototyping:
+you are the error handler in real-time
+as you learn how to use the resource.
+
+But deferring or omitting the error handling in application code is always short-sighted.
+The extra time it takes to code proper error handling,
+will be paid back multiple times in the time saved during debugging.
+Error handling is not a nice extra "bell" or "whistle";
+it's foundational and offers the quickest path to completion!
+
+Good error handling is always required
+because even though it seems to be working now,
+in time, things will go wrong.
 A configuration file gets corrupted, a disk fills up, permissions change, ...
 You want the application to not simply be a victim,
 but to actually aid in discovering the path to recovery.
