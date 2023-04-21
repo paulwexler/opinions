@@ -318,7 +318,7 @@ you are the error handler in real-time
 as you learn how to use the resource.
 
 But deferring or omitting the error handling in application code is always short-sighted.
-The extra time it takes to code proper error handling,
+The extra time it takes to code proper error handling
 will be paid back multiple times in the time saved during debugging.
 Error handling is not a nice extra "bell" or "whistle";
 it's foundational and offers the quickest path to completion!
