@@ -579,7 +579,9 @@ and attempt to handle these errors,
 however for many applications,
 there is no need to handle these exceptions,
 as they are due to configuration errors
-or events beyond the control of the program.
+or events beyond the control of the program
+and the stack trace which shows the `RequestException`
+is entirely sufficient.
 
 On the other hand, when a `Response` object is returned,
 it is the responsibility of the application
