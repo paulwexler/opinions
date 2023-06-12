@@ -54,6 +54,9 @@ A strategy is required to develop resilient code.
 Consider the prototyping experiments as "bottom-up" research,
 and write the program "top-down".
 Start with the mainline.
+It will contain all of the particulars
+and all of the assumptions required
+to use the components it employs.
 Develop cohesive components
 and strive always to reduce their coupling.
 
