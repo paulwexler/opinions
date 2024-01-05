@@ -847,7 +847,7 @@ and other operations as well.
 #### First approach: A Parser and a Master
 
 We'll parse the command line arguments
-and dispatch to the selected command.
+and then dispatch to the selected command.
 
 We'll create `class DuckParser(argparse.ArgumentParser)` to parse the arguments
 and obtain a `namespace`.
@@ -882,6 +882,10 @@ There are problems with this approach.
 In order to add a new command
 we'd have to understand the entire design
 and add the command to both DuckParser and DuckMaster.
+
+This design does not manage the coupling that must exist
+between the parser for a command and the code
+which operates on the parsed namespace.
 
 #### Second approach: A Command and a Master
 
