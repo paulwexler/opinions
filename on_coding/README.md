@@ -337,6 +337,7 @@ If you want the application to be robust,
 then whenever the application calls an external resource
 the return status should be checked.
 If it is a failure, the error message should include at a minimum
+
 1. The caller's view of what was attempted.
 2. The resource that was called (including all arguments if any).
 3. What the resource returned.
@@ -393,6 +394,7 @@ A program is required which reads the logs from stdin,
 and writes the redacted logs to stdout.
 
 The redaction is straightforward.
+
 * All IP addresses must have their digits replaced with "X".\
   IP addresses are 4 8-bit numbers (0-255) separated by ".".
 * All passwords must be replaced with "REDACTED".\
@@ -645,6 +647,7 @@ and navigate with impunity.
 If not, the error message should be sufficient for a developer
 to understand the root cause of the error.
 It should show:
+
 * what is wrong with the response (from the program's point of view)
 * `response.status_code` and `response.reason`
 * what was sent
@@ -671,7 +674,9 @@ and return the requested object,
 or accept a 404 when the object is not found.
 
 Proceeding from the top down, the implementation falls neatly into two components.
+
 1. A Requestor
+
    * Its `send` method handles any errors from sending the request. \
      It returns (the JSON decoded response object, status code) \
      or it raises `RuntimeError`.
@@ -680,6 +685,7 @@ Proceeding from the top down, the implementation falls neatly into two component
    * Besides decoding the JSON response
      it need not know what a valid response is,
      as it delegates that to the Validator.
+
 2. A Validator which validates the `Response` object
    to ensure it matches the `response_template`.
 
@@ -745,6 +751,7 @@ Here is the complete program: [requestor.py][requestor_py]
 `NestedValidator.__call__` must traverse the `template` recursively,
 comparing it to the `obj`,
 and validating as it goes.
+
 * If the `template` is a `type`, the `obj` must be an instance of that `type`,
   otherwise the `type` of the `obj` must equal the `type` of the `template`.
   This implies that if the `template` is `object`, then the `obj` is valid.
