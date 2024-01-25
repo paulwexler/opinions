@@ -24,6 +24,7 @@ is to handle the case of when the `for` loop has run to completion.
 In other words, the implied `if` is **"if a `break` was executed"**.
 And of course that only happens when the break condition was found to be true.
 So `else` only runs when the break condition was never found to be true:
+
 ```python
     for x in my_iterable:
         if the_break_condition(x) is True:
@@ -31,5 +32,32 @@ So `else` only runs when the break condition was never found to be true:
             break
         handle_the_condition_is_false(x)
     else:
-        handle_the_condition_was_never_true()
+        handle_the_condition_was_never_found_to_be_true()
+```
+
+The interpreter knows whether a `break` was executed
+and the `for else` block allows the code to know it as well.
+Without this construct the code would have to "manually" keep track:
+
+```python
+    break_out = False
+    for x in my_iterable:
+        if the_break_condition(x) is True:
+            handle_the_condition_is_true(x)
+            break_out = True
+            break
+        handle_the_condition_is_false(x)
+    if break_out:
+        pass
+    else:
+        handle_the_condition_was_never_found_to_be_true()
+```
+
+`for else` is ideal for searching:
+
+```python
+    for x in my_iterable:
+        ... # search for x and break when found
+    else:
+        handle_not_found()
 ```
