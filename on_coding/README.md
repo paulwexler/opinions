@@ -213,9 +213,7 @@ independently of its users.
 As a programming habit,
 I always write the doc strings first,
 then I implement what was described.
-This actually saves time!
-When I'm struggling to say what it does,
-I'm in no position to implement it.
+Writing the doc string is actually step 4. during the recursive partioning.
 
 `pylint` requires doc strings so I use them.
 And I always lint my code before testing it.
