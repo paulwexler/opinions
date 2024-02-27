@@ -283,7 +283,8 @@ The trace lists the error, file, method, and line number which crashed.
 When I look there,
 if there is still any mystery,
 I can put an output statement at the start of the method
-which shows the input arguments.
+to show its input arguments
+and then run the program again.
 If the input is correct, the error is in the method;
 if not, the trace shows the line number of the caller,
 so I can continue this search technique from there.
