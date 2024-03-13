@@ -958,6 +958,31 @@ This is why (after the prototyping experiments have revealed
 the light at the end of the tunnel)
 this code should be deferred as long as possible.
 
+## Conclusion
+
+Applications are useful when they solve problems in the real world.
+The world however, is phenomenon rich;
+the simplest things are more complicated than they first appear.
+
+You've written a program to put your ducks in a row.
+You thought back at Step 0
+that you understood what a duck was
+but then it turns out that while sorting
+ducklings must remain with their mothers.
+What must change to handle this?
+What about the Canadian clients?
+(Ducks from Quebec are measured in kilograms,
+and from Ontario in Imperial pounds).
+What about the Muscovy ducks which are measured in centimeters?
+
+The world is complicated
+and it is immensely difficult to anticipate all the complexities
+which may arise
+(seemingly out of nothing)
+in any given domain.
+
+This is why resilience in the implementation is so important.
+
 [nested_validator_py]: ./nested_validator.py
 [redact_py]: ./redact.py
 [requestor_py]: ./requestor.py
