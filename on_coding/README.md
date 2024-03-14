@@ -148,7 +148,7 @@ The sub-tasks process their input independently of their caller's context.
 In this way, the leaves of the task tree will have no knowledge
 of the particulars of the application they are embedded in.
 
-At each stage the problem is transformed into finding
+At each stage the problem is either solved or transformed into finding
 an effective axis of generalization.
 Edsgar Dijkstra considers finding
 the greatest common divisor of 111 and 259
