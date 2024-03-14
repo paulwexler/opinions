@@ -995,7 +995,7 @@ which may arise
 (seemingly out of nothing)
 in any given domain.
 
-This is why resilience in the implementation is so important.
+This is why striving for resilience in the implementation is so important.
 
 [nested_validator_py]: ./nested_validator.py
 [redact_py]: ./redact.py
