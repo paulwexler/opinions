@@ -148,6 +148,20 @@ The sub-tasks process their input independently of their caller's context.
 In this way, the leaves of the task tree will have no knowledge
 of the particulars of the application they are embedded in.
 
+At each stage the problem is transformed into finding
+an effective axis of generalization.
+Edsgar Dijkstra considers finding
+the greatest common divisor of 111 and 259
+in _Chapter 0 Executional Abstraction_ of _"A Discipline of Programming"_
+published by Prentice-Hall.
+He chooses a GCD-computer over a 111-and-259-processor
+and discusses
+'what characteristics make a generalization "helpful for our purpose"'.
+
+For me personally, the axes appear spontaneously
+as a creative act driven by the desire to generalize
+and at this time I am unable to say more about it.
+
 As the decomposition proceeds,
 each sub-task must do,
 or accomplish,
