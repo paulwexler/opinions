@@ -584,6 +584,27 @@ so `filter` can reduce `line` by `self.replacer.values()`.
 
 Here is the complete program: [redact.py][redact_py]
 
+Please note that
+the redaction details are encapsulated in `LineRedactor.replacer`.
+So even though `LineRedactor` as implemented
+contains a specific redaction,
+it is in a real sense just the "default" redaction
+which can be overwritten by sub-classing:
+
+```python
+    class MyLineRedactor(LineRedactor):
+        replacer = { ... }
+```
+
+While `replacer` could be a run-time argument
+to `LineRedactor__call__(self, replacer)`,
+I prefer it as a class variable.
+`LineRedactor.filter` expects `replacer` to be a `dict` of callables
+which take one string argument and return a string.
+That's a lot of coupling best managed within the class
+not as an external object which
+can be passed in but must conform.
+
 ### A `requests` example
 
 The `requests` module provides a clean interface
