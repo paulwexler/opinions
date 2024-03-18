@@ -346,6 +346,11 @@ A configuration file gets corrupted, a disk fills up, permissions change, ...
 You want the application to not simply be a victim,
 but to actually aid in discovering the path to recovery.
 
+Compare
+
+* `init: FAILED :(`
+* `init: read /some/path/config.cfg -> "Permission denied"`
+
 If you want the application to be robust,
 then whenever the application calls an external resource
 the return status should be checked.
