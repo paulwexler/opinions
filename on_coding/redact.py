@@ -36,12 +36,24 @@ class LineFilter:
         raise NotImplementedError   # pragma: no cover
 
 
+class Redaction(dict):
+    '''
+    A dict of Replacer that iterates over them.
+    '''
+    def __iter__(self):
+        yield from self.values()
+
+    def __setitem__(self, key, value):
+        assert isinstance(value, Replacer)
+        super().__setitem__(key, value)
+
+
 class LineRedactor(LineFilter):
     '''
     This filter redacts each line
     Replace the password first because it may contain an IP.
     '''
-    replacer = dict(
+    redaction = Redaction(
             replace_password=Replacer(
                     pattern_string=r'(?i)("password": ?)"(.*?)"',
                     repl=r'\1"REDACTED"'),
@@ -66,7 +78,7 @@ class LineRedactor(LineFilter):
         return filtered `line`
         Reduce `line` by all the replacers.
         '''
-        for replacer in self.replacer.values():
+        for replacer in self.redaction:
             line = replacer(line)
         return line
 
