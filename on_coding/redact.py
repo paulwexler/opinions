@@ -38,10 +38,17 @@ class LineFilter:
 
 class Redaction(dict):
     '''
-    A dict of Replacer that iterates over them.
+    A dict of Replacer that reduces a given line with them
+    when called.
     '''
-    def __iter__(self):
-        yield from self.values()
+    def __call__(self, line):
+        '''
+        return filtered `line`
+        Reduce `line` by all the replacers.
+        '''
+        for replacer in self.values():
+            line = replacer(line)
+        return line
 
     def __setitem__(self, key, value):
         assert isinstance(value, Replacer)
@@ -75,12 +82,9 @@ class LineRedactor(LineFilter):
 
     def filter(self, line):
         '''
-        return filtered `line`
-        Reduce `line` by all the replacers.
+        return redacted `line`
         '''
-        for replacer in self.redaction:
-            line = replacer(line)
-        return line
+        return self.redaction(line)
 
 
 if __name__ == '__main__':  # pragma: no cover
