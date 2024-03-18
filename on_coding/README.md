@@ -348,7 +348,8 @@ but to actually aid in discovering the path to recovery.
 
 Compare
 
-* `init: FAILED :(`
+* `FAILED :(`
+* `Unable to read configuration.`
 * `init: read /some/path/config.cfg -> "Permission denied"`
 
 If you want the application to be robust,
