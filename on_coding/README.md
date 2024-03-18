@@ -597,7 +597,7 @@ which can be overwritten by sub-classing:
 ```
 
 While `replacer` could be a run-time argument
-to `LineRedactor__call__(self, replacer)`,
+to `LineRedactor.__call__(self, replacer)`,
 I prefer it as a class variable.
 `LineRedactor.filter` expects `replacer` to be a `dict` of callables
 which take one string argument and return a string.
