@@ -1034,7 +1034,7 @@ ducklings must remain with their mothers.
 What must change to handle this?
 What about the Canadian clients?
 (Ducks from Quebec are measured in kilograms,
-and from Ontario in Imperial pounds).
+and from Ontario in pounds).
 What about the Muscovy ducks which are measured in centimeters?
 
 The world is complicated
