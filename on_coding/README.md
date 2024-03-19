@@ -583,9 +583,9 @@ so `filter` can reduce `line` by `self.replacer.values()`.
 ```
 
 Finally,
-`LineRedactor.filter` expects `replacer` to be a `dict` of callables
+`LineRedactor.filter` expects `self.replacer` to be a `dict` of callables
 which take one string argument and return a string.
-That's a lot of coupling best managed with a class
+That's a lot of coupling best managed with a separate class:
 
 ```python
     class Redaction(dict):
