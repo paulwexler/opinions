@@ -583,9 +583,9 @@ so `filter` can reduce `line` by `self.replacer.values()`.
 ```
 
 Finally,
-`LineRedactor.filter` expects `replacer` to be a `dict` of callables
+`LineRedactor.filter` expects `self.replacer` to be a `dict` of callables
 which take one string argument and return a string.
-That's a lot of coupling best managed with a class
+That's a lot of coupling best managed with a separate class:
 
 ```python
     class Redaction(dict):
@@ -1034,7 +1034,7 @@ ducklings must remain with their mothers.
 What must change to handle this?
 What about the Canadian clients?
 (Ducks from Quebec are measured in kilograms,
-and from Ontario in Imperial pounds).
+and from Ontario in pounds).
 What about the Muscovy ducks which are measured in centimeters?
 
 The world is complicated
