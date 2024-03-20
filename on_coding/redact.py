@@ -17,25 +17,6 @@ class Replacer:
         return self.pattern.sub(self.repl, string)
 
 
-class LineFilter:
-    '''
-    Filter infile a line at a time, write filtered line to outfile.
-    '''
-    def __init__(self, infile, outfile):
-        self.infile = infile
-        self.outfile = outfile
-
-    def __call__(self):
-        for line in self.infile:
-            self.outfile.write(self.filter(line))
-
-    def filter(self, line):
-        '''
-        return filtered `line`
-        '''
-        raise NotImplementedError   # pragma: no cover
-
-
 class Redaction(dict):
     '''
     A dict of Replacer that reduces a given line with them
@@ -53,6 +34,25 @@ class Redaction(dict):
     def __setitem__(self, key, value):
         assert isinstance(value, Replacer)
         super().__setitem__(key, value)
+
+
+class LineFilter:
+    '''
+    Filter infile a line at a time, write filtered line to outfile.
+    '''
+    def __init__(self, infile, outfile):
+        self.infile = infile
+        self.outfile = outfile
+
+    def __call__(self):
+        for line in self.infile:
+            self.outfile.write(self.filter(line))
+
+    def filter(self, line):
+        '''
+        return filtered `line`
+        '''
+        raise NotImplementedError   # pragma: no cover
 
 
 class LineRedactor(LineFilter):
