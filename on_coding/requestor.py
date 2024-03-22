@@ -16,7 +16,7 @@ class Requestor:
     >>> response_template = {objects to match indexed by HTTP status code}
     >>> try:
     >>>     obj, status_code = requestor.send(request_args, response_template)
-    >>> except RuntimeError:
+    >>> except RuntimeError as exc:
     '''
     class_validator = nested_validator.NestedValidator
 
