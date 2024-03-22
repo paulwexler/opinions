@@ -10,7 +10,13 @@ import nested_validator
 
 class Requestor:
     '''
-    Validate request response against a request template
+    Validate request response against a response template
+    >>> requestor = Requestor()
+    >>> request_args = {requests.request keyword arguments}
+    >>> response_template = {objects to match indexed by HTTP status code}
+    >>> try:
+    >>>     obj, status_code = requestor.send(request_args, response_template)
+    >>> except RuntimeError:
     '''
     class_validator = nested_validator.NestedValidator
 
