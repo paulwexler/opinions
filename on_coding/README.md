@@ -590,7 +590,7 @@ That's a lot of coupling best managed with a separate class:
 ```python
     class Redaction(dict):
         '''
-        A dict of Replacer that reduces a given line with them
+        A dict of Replacer that reduces a given line by them
         when called.
         '''
         def __call__(self, line):
