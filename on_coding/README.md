@@ -582,7 +582,7 @@ so `filter` can reduce `line` by `self.replacer.values()`.
             return line
 ```
 
-Finally,
+Now it is easier to add `Replacer` instances, but
 `LineRedactor.filter` expects `self.replacer` to be a `dict` of callables
 which take one string argument and return a string.
 That's a lot of coupling best managed with a separate class:
@@ -612,19 +612,29 @@ That's a lot of coupling best managed with a separate class:
 
 ```
 
-Here is the complete program: [redact.py][redact_py]
-
-Please note that
-the redaction details are encapsulated in `LineRedactor.redaction`.
-So even though `LineRedactor` as implemented
-contains a specific redaction,
-it is in a real sense just the "default" redaction
-which can be overwritten by sub-classing:
+Perhaps I should have began with
+encapsulating the redaction and its details.
+In any case `Redaction` does this nicely
+and now instead of `redaction` as a class variable,
+it can be declared by the mainline
+and passed as an argument to `LineRedactor.__init__`.
 
 ```python
-    class MyLineRedactor(LineRedactor):
-        redaction = Redaction( ... )
+    class LineRedactor(LineFilter):
+        def __init__(self, infile, outfile, redaction: Redaction):
+            super().__init__(infile, outfile)
+            self.redaction = redaction
+        ...
+
+    if __name__ == '__main__':
+        import sys
+
+        redaction = Redaction(
+                ...
+        LineRedactor(sys.stdin, sys.stdout, redaction)()
 ```
+
+Here is the complete program: [redact.py][redact_py]
 
 ### A `requests` example
 
