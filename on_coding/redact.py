@@ -58,6 +58,22 @@ class LineFilter:
 class LineRedactor(LineFilter):
     '''
     This filter redacts each line
+    '''
+    def __init__(self, infile, outfile, redaction: Redaction):
+        super().__init__(infile, outfile)
+        self.redaction = redaction
+
+    def filter(self, line):
+        '''
+        return redacted `line`
+        '''
+        return self.redaction(line)
+
+
+if __name__ == '__main__':  # pragma: no cover
+    import sys
+
+    '''
     Replace the password first because it may contain an IP.
     '''
     redaction = Redaction(
@@ -79,15 +95,4 @@ class LineRedactor(LineFilter):
                     repl=lambda match: ''.join(
                             '.' if c == '.' else 'X'
                                     for c in match.group(1))))
-
-    def filter(self, line):
-        '''
-        return redacted `line`
-        '''
-        return self.redaction(line)
-
-
-if __name__ == '__main__':  # pragma: no cover
-    import sys
-
-    LineRedactor(sys.stdin, sys.stdout)()
+    LineRedactor(sys.stdin, sys.stdout, redaction)()
