@@ -636,7 +636,7 @@ it can be passed as an argument to `LineRedactor.__init__`.
 
 Finally, please note that all the classes are "general"
 so they can be in their own module: [redact.py][redact_py]
-and the mainline and the declaration of REDACTION
+and the mainline and the declaration of `REDACTION`
 can be in: [redact_main.py][redact_main_py]
 
 ### A `requests` example
