@@ -439,7 +439,7 @@ it is more general and takes infile and outfile arguments.
 This generalization is useful because now `LineRedactor`
 can be run independently of `sys`
 as for example
-in a [test suite][test_redact_py] using `io.StringIO` instances as files.
+in a [test suite][test_redact_main_py] using `io.StringIO` instances as files.
 
 `LineRedactor.__call__` will redact the input file a line at a time.
 `LineRedactor` is an instance of a more general program,
@@ -616,8 +616,7 @@ Perhaps I should have began with
 encapsulating the redaction and its details.
 In any case `Redaction` does this nicely
 and now instead of `redaction` as a class variable,
-it can be declared by the mainline
-and passed as an argument to `LineRedactor.__init__`.
+it can be passed as an argument to `LineRedactor.__init__`.
 
 ```python
     class LineRedactor(LineFilter):
@@ -626,15 +625,19 @@ and passed as an argument to `LineRedactor.__init__`.
             self.redaction = redaction
         ...
 
+    REDACTION = Redaction(
+            ...
+
     if __name__ == '__main__':
         import sys
 
-        redaction = Redaction(
-                ...
-        LineRedactor(sys.stdin, sys.stdout, redaction)()
+        LineRedactor(sys.stdin, sys.stdout, REDACTION)()
 ```
 
-Here is the complete program: [redact.py][redact_py]
+Finally, please note that all the classes are "general"
+so they can be in their own module: [redact.py][redact_py]
+and the mainline and the declaration of REDACTION
+can be in: [redact_main.py][redact_main_py]
 
 ### A `requests` example
 
@@ -1057,6 +1060,7 @@ This is why striving for resilience in the implementation is so important.
 
 [nested_validator_py]: ./nested_validator.py
 [redact_py]: ./redact.py
+[redact_main_py]: ./redact_main.py
 [requestor_py]: ./requestor.py
-[test_redact_py]: ./test/test_redact.py
+[test_redact_main_py]: ./test/test_redact_main.py
 [test_suite]: ./test

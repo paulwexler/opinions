@@ -1,6 +1,7 @@
 import io
 
 import redact
+import redact_main
 
 def changes():
     intext = '''
@@ -9,7 +10,7 @@ def changes():
     expect = intext.replace('PW', 'REDACTED').replace('0.0.0.12', 'X.X.X.XX')
     infile = io.StringIO(intext)
     outfile = io.StringIO()
-    redact.LineRedactor(infile, outfile)()
+    redact.LineRedactor(infile, outfile, redact_main.REDACTION)()
     outtext = outfile.getvalue()
     assert expect == outtext, f'{expect} != {outtext}'
     return outtext
@@ -18,7 +19,7 @@ def no_change(intext):
     expect = intext
     infile = io.StringIO(intext)
     outfile = io.StringIO()
-    redact.LineRedactor(infile, outfile)()
+    redact.LineRedactor(infile, outfile, redact_main.REDACTION)()
     outtext = outfile.getvalue()
     assert expect == outtext, f'{expect} != {outtext}'
 

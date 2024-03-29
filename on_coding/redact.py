@@ -1,6 +1,11 @@
 '''
-This filter redacts passwords and IP addresses
+classes to redact files
+
+>>> redaction = Redaction(
+            replacer1=Replacer(pattern_string=, repl=), ...)
+>>> LineRedactor(infile, outfile, redaction)()
 '''
+
 # pylint: disable=too-few-public-methods
 
 import re
@@ -8,6 +13,8 @@ import re
 class Replacer:
     '''
     Wrap re.sub
+    >>> replacer = Replacer(pattern_string, repl)
+    >>> result_string = replacer(input_string)
     '''
     def __init__(self, pattern_string, repl):
         self.pattern = re.compile(pattern_string)
@@ -68,31 +75,3 @@ class LineRedactor(LineFilter):
         return redacted `line`
         '''
         return self.redaction(line)
-
-
-if __name__ == '__main__':  # pragma: no cover
-    import sys
-
-    '''
-    Replace the password first because it may contain an IP.
-    '''
-    redaction = Redaction(
-            replace_password=Replacer(
-                    pattern_string=r'(?i)("password": ?)"(.*?)"',
-                    repl=r'\1"REDACTED"'),
-            replace_ip=Replacer(
-                    # With an abundance of caution,
-                    # the word delimiter "\b" which might normally
-                    # delimit a regex for an IP address, is omitted here.
-                    pattern_string=(
-                            r'('
-                            r'(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)'
-                            r'('
-                            r'\.'
-                            r'(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)'
-                            r'){3}'
-                            r')'),
-                    repl=lambda match: ''.join(
-                            '.' if c == '.' else 'X'
-                                    for c in match.group(1))))
-    LineRedactor(sys.stdin, sys.stdout, redaction)()
