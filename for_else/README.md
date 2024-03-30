@@ -57,7 +57,7 @@ Without this construct the code would have to "manually" keep track:
 
 ```python
     for x in my_iterable:
-        ... # search for x and break when found
+        ... # search x and break when found
     else:
         handle_not_found()
 ```
