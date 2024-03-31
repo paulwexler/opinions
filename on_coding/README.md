@@ -421,9 +421,12 @@ The redaction is straightforward.
   The passwords are encoded in a JSON dict
   as the value of the "password" key (using a case-insensitive match).
 
-This example is simple because there is no error handling.
-The opening and management of the files will be handled by the pipeline
-of which this program will be a part.
+This example is simple because
+
+* There is no error handling.\
+  The opening and management of the files will be handled by the pipeline
+  of which this program will be a part.
+* The redactions can all be accomplished using Python's `re` module.
 
 The mainline needs to process stdin and stdout
 so it calls a `LineRedactor` instantiated with `sys.stdin` and `sys.stdout`.
