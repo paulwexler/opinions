@@ -228,6 +228,7 @@ As a programming habit,
 I always write the doc strings first,
 then I implement what was described.
 Writing the doc string is actually step 4. during the recursive partitioning.
+It is the statement of the solution to the component's problem.
 
 `pylint` requires doc strings so I use them.
 And I always lint my code before testing it.
@@ -420,9 +421,12 @@ The redaction is straightforward.
   The passwords are encoded in a JSON dict
   as the value of the "password" key (using a case-insensitive match).
 
-This example is simple because there is no error handling.
-The opening and management of the files will be handled by the pipeline
-of which this program will be a part.
+This example is simple because
+
+* There is no error handling.\
+  The opening and management of the files will be handled by the pipeline
+  of which this program will be a part.
+* The redactions can all be accomplished using Python's `re` module.
 
 The mainline needs to process stdin and stdout
 so it calls a `LineRedactor` instantiated with `sys.stdin` and `sys.stdout`.
@@ -471,7 +475,8 @@ as we've already achieved our purpose
 in that `LineFilter` only does one thing
 and it frees `LineRedactor` to only implement the redaction.
 
-We'll use the regular expression substitution method `re.sub`
+We'll use the regular expression substitution method
+`re.sub(pattern_string, repl, line)`
 to replace the passwords and IP addresses.
 We'll replace the passwords first in case they happen to match an IP.
 
