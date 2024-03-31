@@ -475,7 +475,8 @@ as we've already achieved our purpose
 in that `LineFilter` only does one thing
 and it frees `LineRedactor` to only implement the redaction.
 
-We'll use the regular expression substitution method `re.sub`
+We'll use the regular expression substitution method
+`re.sub(pattern_string, repl, line)`
 to replace the passwords and IP addresses.
 We'll replace the passwords first in case they happen to match an IP.
 
