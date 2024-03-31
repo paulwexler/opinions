@@ -228,6 +228,7 @@ As a programming habit,
 I always write the doc strings first,
 then I implement what was described.
 Writing the doc string is actually step 4. during the recursive partitioning.
+It is the statement of the solution to the component's problem.
 
 `pylint` requires doc strings so I use them.
 And I always lint my code before testing it.
