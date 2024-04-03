@@ -477,11 +477,12 @@ and it frees `LineRedactor` to only implement the redaction.
 
 We'll use the regular expression substitution method
 `re.sub(pattern_string, repl, line)`
-to replace the passwords and IP addresses.
+to replace the passwords and IP addresses in `line`.
 We'll replace the passwords first in case they happen to match an IP.
 
 `repl`, the replacement string or function,
-may reference groups in the `pattern_string`.
+may reference groups in the `pattern_string`,
+the regular expression describing what to replace.
 This coupling is unavoidable
 so ideally both arguments should be declared in the same place.
 The problem with calling `re.sub` directly, as in
