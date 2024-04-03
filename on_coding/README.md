@@ -621,7 +621,9 @@ That's a lot of coupling best managed with a separate class:
 Perhaps I should have began with
 encapsulating the redaction and its details.
 In any case `Redaction` does this nicely
-and now instead of `redaction` as a class variable,
+and it is interesting to observe that it crystallized
+through the effort to reduce coupling.
+Now instead of `redaction` as a class variable,
 it can be passed as an argument to `LineRedactor.__init__`.
 
 ```python
@@ -640,8 +642,8 @@ it can be passed as an argument to `LineRedactor.__init__`.
         LineRedactor(sys.stdin, sys.stdout, REDACTION)()
 ```
 
-Finally, please note that all the classes are "general"
-so they can be in their own module: [redact.py][redact_py]
+Finally, please note that as all the classes are "general"
+they can be in their own module: [redact.py][redact_py]
 and the mainline and the declaration of `REDACTION`
 can be in: [redact_main.py][redact_main_py]
 
