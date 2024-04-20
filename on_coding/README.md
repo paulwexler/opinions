@@ -148,7 +148,8 @@ The sub-tasks process their input independently of their caller's context.
 In this way, the leaves of the task tree will have no knowledge
 of the particulars of the application they are embedded in.
 
-At each stage the problem is either solved or transformed into finding
+At each stage the problem is either solved, partitioned,
+or transformed into finding
 an effective axis of generalization.
 Edsgar Dijkstra considers finding
 the greatest common divisor of 111 and 259
@@ -245,7 +246,7 @@ Of these, "why" is the most important, and "how" the least.
 In a language as expressive as Python, the "how" is the code itself.
 It is rare to need in-line comments in Python.
 In other words you seldom need a "how" for the "how".
-The doc string should be the "what".
+The doc string is the component's "what".
 This almost always includes a description of the input and output.
 As for the "why",
 it derives from the context of the caller's "what",
@@ -494,8 +495,8 @@ The problem with calling `re.sub` directly, as in
 ```
 
 is that compilation of a pattern string into a pattern is costly
-and ought to take place during initialization,
-not inside a loop.
+and ought to take place only once during initialization,
+not repeatedly inside a loop.
 A solution is the `Replacer` class
 which is initialized with `pattern_string`, and `repl`,
 and invokes `re.sub` when called.
