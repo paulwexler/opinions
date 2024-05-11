@@ -126,7 +126,7 @@ and strive always to reduce their coupling.
   Are the classes too complex?
 
 
-## Partitioning the task.
+## Partitioning the task
 
 For each task there is the code that does the work,
 and there is the code that provides the context for the work to be done.
@@ -167,13 +167,30 @@ As the decomposition proceeds,
 each sub-task must do,
 or accomplish,
 or be responsible for
-exactly one thing <sup id="a1">[1](#f1)</sup>.
+exactly one thing.
 Its implementation must fit on one screen.
+The goal is highly cohesive components.
+If a component does two things, it is half as cohesive as if it did one thing.
+Its cohesion deteriorates exponentially
+because the number of possible interactions
+between the things it does grows exponentially.
+
+```python
+component.cohesion = 2 ** (1 - component.number_of_things_it_does)
+```
 
 Isolate the external interfaces.
 Encapsulate the knowledge required to use an external resource.
 That knowledge should be centralized
-and not sprinkled throughout the implementation <sup id="a2">[2](#f2)</sup>.
+and not sprinkled throughout the implementation.
+Your knowledge of the resource may grow,
+or patterns of error handling may be required
+for errors which did not appear
+during the prototyping of the resource
+but do appear during actual use.
+In any case, if the usage is isolated,
+the isolate can be fixed or improved
+independently of its users.
 
 Keep the code factored as you go.
 When you have to do the same thing again only slightly differently,
@@ -195,33 +212,6 @@ some components may be altered (it won't take long),
 others may be scrapped (so what!),
 and new ones may be written (it won't take too long),
 but everything else remains unchanged!
-
-<a name="f1"><sup>1</sup></a>
-<sup>
-: The goal is highly cohesive components.
-If a component does two things, it is half as cohesive as if it did one thing.
-Its cohesion deteriorates exponentially
-because the number of possible interactions
-between the things it does grows exponentially.
-</sup>
-[*](#a1)
-
-```python
-component.cohesion = 2 ** (1 - component.number_of_things_it_does)
-```
-
-<a name="f2"><sup>2</sup></a>
-<sup>
-: Your knowledge of the resource may grow,
-or patterns of error handling may be required
-for errors which did not appear
-during the prototyping of the resource
-but do appear during actual use.
-In any case, if the usage is isolated,
-the isolate can be fixed or improved
-independently of its users.
-</sup>
-[*](#a2)
 
 ## doc strings
 
@@ -404,7 +394,7 @@ and scores 10.00/10 with pylint,
 but the following examples omit the doc strings
 because the code is annotated.
 
-### A filter example.
+### A filter example
 
 As network admin, I need to send log files to a 3rd party auditor.
 These files are text files with one log entry per line.
