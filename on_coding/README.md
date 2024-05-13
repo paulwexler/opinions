@@ -83,6 +83,9 @@ and strive always to reduce their coupling.
   What is the desired outcome?
   What is the input?
   Use the appropriate terms from the domain at hand unambiguously.
+  Choose names carefully and use them consistently;
+  let them keep pace with your understanding
+  as your knowledge of the domain grows.
   Avoid aliases and synonyms.
   Be rigorous.
 
