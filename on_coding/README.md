@@ -493,7 +493,7 @@ not repeatedly inside a loop.
 A solution is the `Replacer` class
 which is initialized with `pattern_string`, and `repl`,
 and invokes `re.sub` when called.
-Additionally, it isolates and encapsulates the use of `re`.
+Additionally, it isolates and encapsulates the use of `re.sub`.
 
 ```python
     import re
