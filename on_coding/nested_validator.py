@@ -2,22 +2,20 @@
 Nested Validator
 Compares an object to a template and ensures they match.
 '''
+import collections
 
 
-class NestedLocation(list):
+class NestedLocation(collections.deque):
     '''
     >>> loc = NestedLocation()
     >>> loc.push(location)
     >>> loc.pop()
     '''
-    def __str__(self):
-        return '.'.join(str(location) for location in self)
+    delimiter = '.'
+    push = collections.deque.append
 
-    def push(self, location):
-        '''
-        push (a.k.a. append)
-        '''
-        self.append(location)
+    def __str__(self):
+        return self.delimiter.join(str(location) for location in self)
 
 
 class NestedValidator:
