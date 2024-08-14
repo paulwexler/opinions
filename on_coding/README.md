@@ -843,18 +843,29 @@ As it traverses, it must keep track of its location in case there is an error.
 The error should be self-explanatory in the context in which it appears.
 `{location of error in the nested object}: {error message}` is sufficient.
 
-A stack of locations is needed to keep track of the nested location,
-and a list of locations is needed to print them as a dot-delimited string.
-So a `list` will suffice for the implementation.
+A LIFO (last-in first-out) stack of locations is needed
+to keep track of the nested location,
+and an iterable of locations is needed to print them as a dot-delimited string.
+So while a `list` will suffice for the implementation,
+the collections.deque is optimized for insertion at each end
+so it will be faster, and it has an `__iter__`
+which starts with the first-in.
+
+I prefer to use `push` and `pop` instead of `append` and `pop`.
+
+.
 
 `nested_validator.py`
 ```python
-class NestedLocation(list):
-    def __str__(self):
-        return '.'.join(str(location) for location in self)
+import collections
 
-    def push(self, location):
-        self.append(location)
+
+class NestedLocation(collections.deque):
+    delimiter = '.'
+    push = collections.deque.append
+
+    def __str__(self):
+        return self.delimiter.join(str(location) for location in self)
 
 
 class NestedValidator:
